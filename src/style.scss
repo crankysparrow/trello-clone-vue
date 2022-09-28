@@ -1,0 +1,62 @@
+@use './styles/colors' as *;
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap');
+@import './styles/fonts.scss';
+
+:root {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  @apply bg-slate-50;
+  @apply text-dark-900;
+}
+
+.wrapper {
+  @apply container mx-auto px-4 py-10;
+}
+
+input[type='submit'],
+button {
+  @apply btn;
+}
+
+input:not([type='submit']):not([type='file']),
+textarea {
+  @apply bg-slate-1 border-slate-700 border-2 mb-2 px-2 py-1 text-dark text-base rounded-sm transition-all;
+  @apply caret-cerulean-3;
+  line-height: 1.2;
+
+  &:focus {
+    @apply outline-3 outline-solid outline-transparent shadow-md shadow-slate-5 shadow-opacity-40;
+    // box-shadow: 0 0 0 2px #{$color-cerulean-3};
+  }
+}
+
+label {
+  @apply text-base font-normal leading-none mb-1;
+}
+
+input + label {
+  margin-top: 1.5rem;
+}
+
+textarea.input {
+  resize: vertical;
+}
+
+input[readonly] {
+  border-style: dotted;
+  cursor: not-allowed;
+  color: $color-gray-4;
+}

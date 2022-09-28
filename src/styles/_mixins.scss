@@ -1,0 +1,8 @@
+@use 'sass:math';
+
+@function size($val: 16px) {
+	$div: math.div($val, 16);
+	$round: math.div(math.round($div * 100), 100);
+
+	@return $round * 1rem;
+}
