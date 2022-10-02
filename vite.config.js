@@ -2,13 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Unocss from 'unocss/vite'
-import {
-  presetIcons,
-  presetMini,
-  presetAttributify,
-  transformerDirectives,
-  presetUno,
-} from 'unocss'
+import { presetIcons, presetMini, presetAttributify, transformerDirectives, presetUno } from 'unocss'
 import { resolve } from 'path'
 import { presetReasonable } from './unoReasonableColors/index'
 import postcssNesting from 'postcss-nesting'
@@ -26,8 +20,9 @@ export default defineConfig({
 
     Unocss({
       shortcuts: {
-        btn: 'bg-cerulean-5 text-slate-1 px-4 py-2 leading-none font-semibold outline-transparent rounded-none transition-all hover:bg-cerulean-6 text-gray-1 cursor-pointer focus:outline-2 focus:outline-cerulean-3 outline-solid',
+        btn: 'bg-cyan-7 text-slate-1 px-4 py-2 lh-none font-semibold outline-transparent rounded-none transition-all hover:bg-cyan-6 text-gray-1 cursor-pointer focus:outline-2 focus:outline-blue-5 outline-solid',
         btnReset: 'bg-transparent p-0 text-dark hover:bg-transparent ',
+        btnSmall: 'btn bg-cyan-7 text-slate-1 px2 py1 leading-none font-medium text-3.5',
       },
       rules: [],
       presets: [
@@ -36,7 +31,6 @@ export default defineConfig({
           warn: true,
         }),
         presetAttributify(),
-        presetReasonable(),
       ],
 
       transformers: [transformerDirectives()],

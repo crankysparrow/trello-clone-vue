@@ -1,28 +1,38 @@
 <script setup>
-import { defineProps, computed } from 'vue'
+import { ref } from 'vue'
 import { useBoardStore } from '../../store/boardstore'
 import { useRoute } from 'vue-router'
+import CreateList from '~/components/CreateList.vue'
+import Lists from '~/components/Lists.vue'
+import List from '~/components/List.vue'
 
 const route = useRoute()
 const id = route.params.id
+const { getBoardById, moveList } = useBoardStore()
 
-// const props = defineProps({
-//   id: String,
-// })
+const board = ref()
+board.value = getBoardById(id)
 
-const { getBoardById } = useBoardStore()
-
-const board = computed(() => {
-  // return boards.find((board) => id === board.id)
-  return getBoardById(id)
-})
+const getList = (listId) => board.value.lists[listId]
 </script>
 
 <template>
-  <div class="wrapper board">
-    <h1>Board: {{ board.name }}</h1>
-    <pre>
-      {{ board }}
-    </pre>
+  <div class="board" relative w-full>
+    <div container mx-auto p4 pb0 w-full>
+      <h1 mb-3>Board: {{ board?.name }}</h1>
+    </div>
+
+    <Lists
+      v-if="board?.lists"
+      :lists="board.lists"
+      :listOrder="board.listOrder"
+      @moveList="(posToMoveFrom, posToMoveTo) => moveList(id, posToMoveFrom, posToMoveTo)">
+      <template #listItem="{ listId, i }">
+        <List :list="getList(listId)" :pos="i" />
+      </template>
+      <template #lastCol>
+        <CreateList :boardId="id" />
+      </template>
+    </Lists>
   </div>
 </template>

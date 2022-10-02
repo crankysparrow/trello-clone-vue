@@ -48,7 +48,7 @@ const closeForm = () => {
     <h1>Your Boards</h1>
     <div class="boards-list" flex items-end mb-20>
       <router-link
-        v-for="(board, i) of boardStore.boards"
+        v-for="(board, i) in boardStore.boards"
         class="board-item"
         :to="`/board/${board.id}`">
         <h3 mb-0>{{ board.name }}</h3>
@@ -74,7 +74,7 @@ const closeForm = () => {
   @apply m--2 flex flex-wrap;
 }
 .board-item {
-  @apply bg-cerulean-6 p-4 text-gray-1  m-2 rounded-sm flex items-end;
+  @apply bg-bluegray-8 p-4 text-gray-1  m-2 rounded-sm flex items-end;
   max-width: 250px;
   min-width: 250px;
   max-height: 100px;

@@ -35,7 +35,6 @@ const create = () => {
 <style lang="scss" scoped>
 @use '../styles/colors' as *;
 .new-board-form {
-  box-shadow: 0 0 10px transparentize($color-slate-5, 0.6);
   width: 290px;
   background-color: #fff;
   padding: 1rem;
