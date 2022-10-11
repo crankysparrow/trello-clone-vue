@@ -20,7 +20,6 @@ function dragStart(e) {
   if (!e.target.classList.contains('list-inner')) return
   e.target.parentElement.classList.add('dragging-list')
   isDragging.value = true
-  // e.dataTransfer.setData('text/plain', e.target.dataset['pos'])
   e.dataTransfer.setData('text/plain', e.target.id)
 }
 

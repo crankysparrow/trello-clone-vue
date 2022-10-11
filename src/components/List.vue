@@ -5,7 +5,7 @@ import ListTooltip from '~/components/ListTooltip.vue'
 import Card from '~/components/Card.vue'
 import CreateCard from '~/components/CreateCard.vue'
 
-const { moveCard } = useBoardStore()
+const { moveCardWithinList, moveCardBetweenLists } = useBoardStore()
 
 const props = defineProps({
   list: { type: Object, required: true },
@@ -25,7 +25,6 @@ function dragStart(e) {
   if (!e.target.classList.contains('card-item')) return
   isDragging.value = true
   e.dataTransfer.setData('text/plain', e.target.id)
-  // e.target.parentElement.classList.add('dragging-list')
 }
 
 function dragEnd(e) {
@@ -40,17 +39,22 @@ function dragLeave(e) {
 
 function drop(e) {
   const posToMoveTo = e.currentTarget.dataset['pos']
-  if (isDragging.value && posToMoveTo) {
+
+  if (posToMoveTo) {
     const id = e.dataTransfer.getData('text/plain')
     const el = document.getElementById(id)
-
     e.currentTarget.classList.remove('drag-card-over')
 
+    const listId = el.dataset['listid']
+
     const posToMoveFrom = el.dataset['pos']
-    moveCard(props.list.boardId, props.list.id, posToMoveFrom, posToMoveTo)
+
+    if (listId !== props.list.id) {
+      moveCardBetweenLists(props.list.boardId, listId, props.list.id, posToMoveFrom, posToMoveTo)
+    } else {
+      moveCardWithinList(props.list.boardId, props.list.id, posToMoveFrom, posToMoveTo)
+    }
   }
-  // const posToMoveFrom = e.dataTransfer.getData('text/plain')
-  // emit('moveList', posToMoveFrom, posToMoveTo)
 }
 </script>
 
@@ -62,8 +66,16 @@ function drop(e) {
 
     <div class="card-items relative">
       <div
-        v-for="(cardId, i) in list.cardIds"
+        v-if="list.cardIds.length === 0"
+        p2
         class="card-outer"
+        :data-pos="0"
+        @dragover="dragOver"
+        dragleave="dragLeave"
+        @drop="drop" />
+      <div
+        v-for="(cardId, i) in list.cardIds"
+        class="card-outer outline-2 outline-blue"
         :data-pos="i"
         :key="cardId"
         @dragover="dragOver"
@@ -73,8 +85,9 @@ function drop(e) {
           class="card-item"
           :cardId="cardId"
           :boardId="list.boardId"
-          :id="`card-${i}`"
+          :id="`card-${cardId}`"
           :data-pos="i"
+          :data-listId="list.id"
           draggable="true"
           @dragstart="dragStart"
           @dragend="dragEnd" />
@@ -87,7 +100,7 @@ function drop(e) {
 
 <style scoped lang="scss">
 .card-outer.drag-card-over {
-  outline: 2px solid blue;
+  outline-style: solid;
 }
 .tip-container {
   right: 0.5rem;

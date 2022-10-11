@@ -35,6 +35,10 @@ export const useBoardStore = defineStore('boards', () => {
     let board = boards.value[boardId]
     let newListId = uuidv4()
 
+    if (!listTitle || listTitle.length < 1) {
+      return 'list needs a title!'
+    }
+
     board.lists[newListId] = {
       title: listTitle,
       id: newListId,
@@ -49,7 +53,7 @@ export const useBoardStore = defineStore('boards', () => {
     let board = boards.value[boardId]
     let listId = board.listOrder[listPos]
     board.listOrder.splice(listPos, 1)
-    delete board[listId]
+    delete board.lists[listId]
   }
 
   const moveList = (boardId, posToMoveFrom, posToMoveTo) => {
@@ -62,7 +66,7 @@ export const useBoardStore = defineStore('boards', () => {
     return false
   }
 
-  const moveCard = (boardId, listId, posToMoveFrom, posToMoveTo) => {
+  const moveCardWithinList = (boardId, listId, posToMoveFrom, posToMoveTo) => {
     let board = boards.value[boardId]
     let list = board.lists[listId]
 
@@ -75,19 +79,52 @@ export const useBoardStore = defineStore('boards', () => {
     return false
   }
 
+  const moveCardBetweenLists = (boardId, oldListId, newListId, posToMoveFrom, posToMoveTo) => {
+    let board = boards.value[boardId]
+    let oldList = board.lists[oldListId]
+    let newList = board.lists[newListId]
+
+    if (oldList && newList && board) {
+      let idToMove = oldList.cardIds.splice(posToMoveFrom, 1)[0]
+      newList.cardIds.splice(posToMoveTo, 0, idToMove)
+
+      let card = board.cards[idToMove]
+      card.currentList = newListId
+
+      return true
+    }
+
+    return false
+  }
+
   const addCardToBoard = (boardId, listId, cardTitle) => {
     let board = boards.value[boardId]
     let list = board.lists[listId]
+
+    if (!cardTitle || cardTitle.length < 1) {
+      return 'card needs a title!'
+    }
 
     let newCardId = uuidv4()
     let card = {
       id: newCardId,
       title: cardTitle,
+      description: '',
       currentList: listId,
     }
 
     board.cards[newCardId] = card
     list.cardIds.push(newCardId)
+  }
+
+  const deleteCardFromBoard = (boardId, cardId) => {
+    let board = boards.value[boardId]
+    let card = board.cards[cardId]
+    let currentListId = card.currentList
+    let currentList = list[currentListId]
+
+    currentList.cardIds = currentList.cardIds.filter((id) => id !== cardId)
+    delete board.cards[cardId]
   }
 
   const renameList = (boardId, listId, newTitle) => {
@@ -108,7 +145,9 @@ export const useBoardStore = defineStore('boards', () => {
     moveList,
     addListToBoard,
     addCardToBoard,
-    moveCard,
+    moveCardWithinList,
     renameList,
+    moveCardBetweenLists,
+    deleteCardFromBoard,
   }
 })

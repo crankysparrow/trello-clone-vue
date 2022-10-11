@@ -1,10 +1,12 @@
 <script setup>
 import { ref, defineEmits, defineProps } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
+import FormMini from '~/components/FormMini.vue'
 
-const { deleteListFromBoard } = useBoardStore()
+const { deleteListFromBoard, renameList } = useBoardStore()
 
 const open = ref(false)
+const renameForm = ref()
 
 const props = defineProps({
   listId: String,
@@ -33,10 +35,25 @@ const props = defineProps({
           </button>
         </li>
         <li>
-          <button btnReset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1>
-            <div i-carbon:term></div>
-            rename list
-          </button>
+          <FormMini
+            submitVal="rename"
+            btnName="rename list"
+            ref="renameForm"
+            @submit="(newName) => renameList(boardId, listId, newName)">
+            <template #button>
+              <button
+                btnReset
+                p2
+                fw400
+                text-sm
+                hover:bg-gray1
+                focus:bg-gray1
+                @click="() => ($refs.renameForm.showForm = true)">
+                <div i-carbon:term></div>
+                rename list
+              </button>
+            </template>
+          </FormMini>
         </li>
       </ul>
     </div>
