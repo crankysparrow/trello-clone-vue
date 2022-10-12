@@ -13,7 +13,14 @@ const card = getCardById(props.boardId, props.cardId)
 </script>
 
 <template>
-  <div class="card" p1 bg-slate-1 mb-2>
+  <router-link
+    :to="{ name: 'card', params: { id: boardId, cardId: cardId } }"
+    class="card"
+    block
+    p1
+    bg-slate-1
+    mb-2
+    hover="bg-blue-2">
     {{ card.title }}
-  </div>
+  </router-link>
 </template>

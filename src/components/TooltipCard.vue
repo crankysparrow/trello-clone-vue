@@ -1,18 +1,36 @@
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import FormMini from '~/components/FormMini.vue'
 
-const { deleteListFromBoard, renameList } = useBoardStore()
+const { deleteCardFromBoard, renameCard } = useBoardStore()
 
 const open = ref(false)
-const renameForm = ref()
+const showRenameForm = ref(false)
+const renameError = ref(false)
 
 const props = defineProps({
-  listId: String,
+  cardId: { type: String, required: true },
   boardId: { type: String, required: true },
-  position: { type: Number, required: true },
 })
+
+const doRename = (newName) => {
+  const err = renameCard(props.boardId, props.cardId, newName)
+  if (err) {
+    renameError.value = err
+  } else {
+    renameError.value = false
+    showRenameForm.value = false
+    open.value = false
+  }
+}
+
+const emit = defineEmits(['deleteCard'])
+
+const doDelete = () => {
+  const err = deleteCardFromBoard(props.boardId, props.cardId)
+  emit('deleteCard')
+}
 </script>
 
 <template>
@@ -20,37 +38,25 @@ const props = defineProps({
     <button class="tip-control" @click="() => (open = !open)" btnReset block>
       <div i-carbon:menu />
     </button>
-    <div class="tooltip" v-if="open" bg-white v-click-outside="() => (open = false)">
+    <div class="tooltip" v-if="open" v-click-outside="() => (open = false)" shadow bg-coolgray-50>
       <ul list-none p-0>
         <li>
-          <button
-            @click="() => deleteListFromBoard(boardId, position)"
-            btnReset
-            p2
-            fw-400
-            text="red-4 sm"
-            hover="bg-red-1 text-red-7">
+          <button @click="doDelete" btnReset p2 fw-400 text="red-4 sm" hover="bg-red-1 text-red-7">
             <div i-carbon:trash-can></div>
-            delete list
+            delete card
           </button>
         </li>
         <li>
           <FormMini
             submitVal="rename"
             btnName="rename list"
-            ref="renameForm"
-            @submit="(newName) => renameList(boardId, listId, newName)">
+            v-model="showRenameForm"
+            :errorMsg="renameError"
+            @submit="(newName) => doRename(newName)">
             <template #button>
-              <button
-                btnReset
-                p2
-                fw400
-                text-sm
-                hover:bg-gray1
-                focus:bg-gray1
-                @click="() => ($refs.renameForm.showForm = true)">
+              <button btnReset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
                 <div i-carbon:term></div>
-                rename list
+                rename card
               </button>
             </template>
           </FormMini>
@@ -73,7 +79,7 @@ const props = defineProps({
   left: auto;
   z-index: 3;
   top: 100%;
-  width: 200px;
+  width: 250px;
 }
 ul button {
   display: flex;

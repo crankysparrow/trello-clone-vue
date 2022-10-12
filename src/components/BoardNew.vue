@@ -27,7 +27,7 @@ const create = () => {
         <label for="newname">New Board Title</label>
         <input type="text" id="newname" v-model="newBoardName" />
       </div>
-      <input type="submit" value="create" />
+      <input type="submit" value="create" class="btnSmall" />
     </form>
   </div>
 </template>

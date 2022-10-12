@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import ListTooltip from '~/components/ListTooltip.vue'
+import TooltipList from '~/components/TooltipList.vue'
 import Card from '~/components/Card.vue'
 import CreateCard from '~/components/CreateCard.vue'
 
@@ -62,7 +62,7 @@ function drop(e) {
   <div class="list" v-if="list">
     <h2>{{ list.title }}</h2>
 
-    <ListTooltip :listId="list.id" :boardId="list.boardId" :position="pos" class="tip-container" />
+    <TooltipList :listId="list.id" :boardId="list.boardId" :position="pos" class="tip-container" />
 
     <div class="card-items relative">
       <div

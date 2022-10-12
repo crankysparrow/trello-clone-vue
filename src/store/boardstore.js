@@ -121,19 +121,48 @@ export const useBoardStore = defineStore('boards', () => {
     let board = boards.value[boardId]
     let card = board.cards[cardId]
     let currentListId = card.currentList
-    let currentList = list[currentListId]
+    let currentList = board.lists[currentListId]
 
     currentList.cardIds = currentList.cardIds.filter((id) => id !== cardId)
     delete board.cards[cardId]
   }
 
   const renameList = (boardId, listId, newTitle) => {
+    if (!newTitle || newTitle.length < 1) {
+      return 'you need a title!'
+    }
     let board = boards.value[boardId]
     if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
     let list = board.lists[listId]
     if (!list) return console.warn(`list doesn't exist! searched for ID: ${listId}`)
 
     list.title = newTitle
+  }
+
+  const renameCard = (boardId, cardId, newTitle) => {
+    if (!newTitle || newTitle.length < 1) {
+      return 'you need a title!'
+    }
+    let board = boards.value[boardId]
+    if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
+
+    let card = board.cards[cardId]
+    if (!card) return console.warn(`card doesn't exist! searched for ID: ${cardId}`)
+
+    card.title = newTitle
+  }
+
+  const describeCard = (boardId, cardId, description) => {
+    if (!description || description.length < 1) {
+      return 'enter some text for description'
+    }
+
+    let board = boards.value[boardId]
+    if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
+    let card = board.cards[cardId]
+    if (!card) return console.warn(`card doesn't exist! searched for ID: ${cardId}`)
+
+    card.description = description
   }
 
   return {
@@ -149,5 +178,7 @@ export const useBoardStore = defineStore('boards', () => {
     renameList,
     moveCardBetweenLists,
     deleteCardFromBoard,
+    renameCard,
+    describeCard,
   }
 })

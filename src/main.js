@@ -10,10 +10,16 @@ import './style.scss'
 
 import home from './pages/index.vue'
 import boardPage from './pages/board/[id].vue'
+import cardPage from './pages/board/[id]/card/[cardId].vue'
+import cardModal from '~/pages/board/[id]/card.vue'
 
 const routes = [
   { path: '/', component: home },
-  { path: '/board/:id', component: boardPage },
+  {
+    path: '/board/:id',
+    component: boardPage,
+    children: [{ path: '/board/:id/card/:cardId', name: 'card', component: cardPage, props: true }],
+  },
 ]
 
 const pinia = createPinia()

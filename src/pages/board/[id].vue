@@ -18,6 +18,7 @@ const getList = (listId) => board.value.lists[listId]
 
 <template>
   <div class="board" relative w-full>
+    <router-view :boardId="id"></router-view>
     <div container mx-auto p4 pb0 w-full>
       <h1 mb-3>Board: {{ board?.name }}</h1>
     </div>

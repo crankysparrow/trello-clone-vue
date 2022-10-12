@@ -19,8 +19,6 @@ const emit = defineEmits(['submit', 'update:modelValue'])
 const onSubmit = () => {
   emit('submit', content.value)
   content.value = ''
-  // showForm.value = false
-  // emit('update:modelValue', false)
 }
 </script>
 
