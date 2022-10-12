@@ -1,7 +1,16 @@
-# Vue 3 + Vite
+# Trello Clone
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Clone of [trello.com](https://trello.com/)
 
-## Recommended IDE Setup
+Some bugs, inconsistencies & incompletenesses but it's functional! 
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## To do 
+
+- [ ] setup 
+  - [ ] create client
+  - [ ] add store
+  - [ ] basic styles
+- [ ] main homepage 
+  - [ ] user 
+    - [x] generate unique ID for user 
+    - [ ] can give themselves a name
