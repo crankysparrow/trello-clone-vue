@@ -47,24 +47,14 @@ const closeForm = () => {
   <div class="boards-list-outer wrapper">
     <h1>Your Boards</h1>
     <div class="boards-list" flex items-end mb-20>
-      <router-link
-        v-for="(board, i) in boardStore.boards"
-        class="board-item"
-        :to="`/board/${board.id}`">
+      <router-link v-for="(board, i) in boardStore.boards" class="board-item" :to="`/board/${board.id}`">
         <h3 mb-0>{{ board.name }}</h3>
       </router-link>
+      <button class="create board-item" @click="openForm">Create Board</button>
 
-      <div class="wrap-create" ref="wrapCreate" relative>
-        <button class="create board-item" @click="openForm">Create Board</button>
-        <transition @enter="boardNewEnter">
-          <BoardNew
-            v-if="showNewBoardForm"
-            ref="newBoardForm"
-            v-click-outside="closeForm"
-            @close="closeForm"
-            :style="{ left: formLeft, top: formTop }" />
-        </transition>
-      </div>
+      <transition name="fade">
+        <BoardNew v-if="showNewBoardForm" ref="newBoardForm" @close="closeForm" />
+      </transition>
     </div>
   </div>
 </template>

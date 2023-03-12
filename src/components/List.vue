@@ -4,8 +4,9 @@ import { useBoardStore } from '~/store/boardstore'
 import TooltipList from '~/components/TooltipList.vue'
 import Card from '~/components/Card.vue'
 import CreateCard from '~/components/CreateCard.vue'
+import TextEditable from '~/components/TextEditable.vue'
 
-const { moveCardWithinList, moveCardBetweenLists } = useBoardStore()
+const { moveCardWithinList, moveCardBetweenLists, renameList } = useBoardStore()
 
 const props = defineProps({
   list: { type: Object, required: true },
@@ -13,6 +14,11 @@ const props = defineProps({
 })
 
 const isDragging = ref(false)
+const draggingId = ref('')
+
+const updateTitle = (newTitle) => {
+  renameList(props.list.boardId, props.list.id, newTitle)
+}
 
 function dragOver(e) {
   e.preventDefault()
@@ -24,6 +30,7 @@ function dragOver(e) {
 function dragStart(e) {
   if (!e.target.classList.contains('card-item')) return
   isDragging.value = true
+  draggingId.value = e.target.id
   e.dataTransfer.setData('text/plain', e.target.id)
 }
 
@@ -60,22 +67,19 @@ function drop(e) {
 
 <template>
   <div class="list" v-if="list">
-    <h2>{{ list.title }}</h2>
-
-    <TooltipList :listId="list.id" :boardId="list.boardId" :position="pos" class="tip-container" />
+    <!-- <h2>{{ list.title }}</h2> -->
+    <TextEditable
+      class="list-title"
+      :title="list.title"
+      @updateTitle="updateTitle"
+      @dragover="dragOver"
+      @drop="drop"
+      :data-pos="0" />
 
     <div class="card-items relative">
       <div
-        v-if="list.cardIds.length === 0"
-        p2
-        class="card-outer"
-        :data-pos="0"
-        @dragover="dragOver"
-        dragleave="dragLeave"
-        @drop="drop" />
-      <div
         v-for="(cardId, i) in list.cardIds"
-        class="card-outer outline-2 outline-blue"
+        class="card-outer"
         :data-pos="i"
         :key="cardId"
         @dragover="dragOver"
@@ -94,12 +98,25 @@ function drop(e) {
       </div>
     </div>
 
-    <CreateCard :boardId="list.boardId" :listId="list.id" />
+    <CreateCard
+      pt1
+      :boardId="list.boardId"
+      :listId="list.id"
+      :data-pos="list.cardIds.length"
+      @dragover="dragOver"
+      @drop="drop" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.card-outer.drag-card-over {
+.card-outer {
+  @apply py-1;
+}
+
+.card-item {
+  @apply outline-2 outline-blue;
+}
+.card-outer.drag-card-over .card-item {
   outline-style: solid;
 }
 .tip-container {
@@ -109,5 +126,9 @@ function drop(e) {
 
 .card-items {
   z-index: 2;
+}
+
+.list-title {
+  @apply text-lg;
 }
 </style>

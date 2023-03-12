@@ -81,7 +81,7 @@ function drop(e) {
   grid-auto-columns: 300px;
   grid-template-rows: auto;
   grid-auto-flow: column;
-  min-height: 50vh;
+  height: auto;
   .list-outer {
     position: relative;
     margin: 0 10px;

@@ -35,13 +35,13 @@ const doDelete = () => {
 
 <template>
   <div class="tooltip-container" absolute>
-    <button class="tip-control" @click="() => (open = !open)" btnReset block>
+    <button class="tip-control" @click="() => (open = !open)" btn-reset block>
       <div i-carbon:menu />
     </button>
     <div class="tooltip" v-if="open" v-click-outside="() => (open = false)" shadow bg-coolgray-50>
       <ul list-none p-0>
         <li>
-          <button @click="doDelete" btnReset p2 fw-400 text="red-4 sm" hover="bg-red-1 text-red-7">
+          <button @click="doDelete" btn-reset p2 fw-400 text="red-4 sm" hover="bg-red-1 text-red-7">
             <div i-carbon:trash-can></div>
             delete card
           </button>
@@ -54,7 +54,7 @@ const doDelete = () => {
             :errorMsg="renameError"
             @submit="(newName) => doRename(newName)">
             <template #button>
-              <button btnReset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
+              <button btn-reset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
                 <div i-carbon:term></div>
                 rename card
               </button>

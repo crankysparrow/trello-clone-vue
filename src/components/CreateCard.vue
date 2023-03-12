@@ -1,7 +1,6 @@
 <script setup>
-import BtnClose from '~/components/BtnClose.vue'
-import BtnAdd from '~/components/BtnAdd.vue'
 import FormMini from '~/components/FormMini.vue'
+import AddForm from '~/components/AddForm.vue'
 import { ref, defineProps } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 
@@ -29,12 +28,13 @@ const create = (newName) => {
 </script>
 
 <template>
-  <FormMini
-    placeholder="card title"
-    submitVal="add"
-    btnName="add card"
-    v-model="show"
-    :errorMsg="errorMsg"
-    @submit="(newName) => create(newName)"
-    class="bg-slate1" />
+  <div class="add-form">
+    <AddForm
+      placeholder="card title"
+      valueSubmit="add"
+      valueShow="add card"
+      v-model="show"
+      :valueError="errorMsg"
+      @submit="(newName) => create(newName)" />
+  </div>
 </template>

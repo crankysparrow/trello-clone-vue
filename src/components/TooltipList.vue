@@ -29,7 +29,7 @@ const listRename = (newName) => {
 
 <template>
   <div class="tooltip-container" absolute>
-    <button class="tip-control" @click="() => (open = !open)" btnReset block>
+    <button class="tip-control" @click="() => (open = !open)" btn-reset block>
       <div i-carbon:menu />
     </button>
     <div class="tooltip" v-if="open" bg-white v-click-outside="() => (open = false)">
@@ -37,7 +37,7 @@ const listRename = (newName) => {
         <li>
           <button
             @click="() => deleteListFromBoard(boardId, position)"
-            btnReset
+            btn-reset
             p2
             fw-400
             text="red-4 sm"
@@ -54,7 +54,7 @@ const listRename = (newName) => {
             :errorMsg="renameError"
             @submit="(newName) => listRename(newName)">
             <template #button>
-              <button btnReset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
+              <button btn-reset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
                 <div i-carbon:term></div>
                 rename list
               </button>

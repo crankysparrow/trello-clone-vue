@@ -26,25 +26,24 @@ body {
   @apply container mx-auto px-4 py-10;
 }
 
-input[type='submit']:not(.btnReset):not(.btnSmall),
+input[type='submit']:not(.btn-reset):not(.btnSmall),
 button {
   @apply btn;
 }
 
 input:not([type='submit']):not([type='file']),
 textarea {
-  @apply bg-slate-1 border-slate-4 border-1 px-2 py-1 text-4 rounded-sm transition-all;
+  @apply bg-slate-1 border-slate-4 border-1 px-2 py-2 text-4 rounded-sm transition-all;
   @apply caret-cyan-6;
   line-height: 1.2;
 
   &:focus {
-    @apply outline-3 outline-solid outline-transparent shadow-md shadow-slate-5 shadow-opacity-40;
-    // box-shadow: 0 0 0 2px #{$color-cerulean-3};
+    @apply outline-3 outline-solid outline-transparent shadow-md shadow-slate-5 shadow-opacity-20;
   }
 }
 
 label {
-  @apply text-base font-normal leading-none mb-1;
+  // @apply text-base font-normal leading-none mb-1;
 }
 
 input + label {
@@ -59,4 +58,19 @@ input[readonly] {
   border-style: dotted;
   cursor: not-allowed;
   color: $color-gray-4;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave {
+  opacity: 1;
 }

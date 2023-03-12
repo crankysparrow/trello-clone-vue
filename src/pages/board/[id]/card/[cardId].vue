@@ -2,22 +2,19 @@
 import { ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
-import Modal from '~/components/Modal.vue'
+import DialogShade from '~/components/DialogShade.vue'
 import TooltipCard from '~/components/TooltipCard.vue'
 import BtnClose from '~/components/BtnClose.vue'
 
 const router = useRouter()
-
 const route = useRoute()
 const boardId = route.params.id
 const cardId = route.params.cardId
 
 const { getBoardById, getCardById, describeCard } = useBoardStore()
 
-const card = ref()
-const board = ref()
-card.value = getCardById(boardId, cardId)
-board.value = getBoardById(boardId)
+const card = ref(getCardById(boardId, cardId))
+// const board = ref(getBoardById(boardId))
 
 const goToBoard = () => {
   router.push(`/board/${boardId}`)
@@ -26,9 +23,6 @@ const goToBoard = () => {
 const editing = ref(false)
 const describeText = ref(card.value.description ?? '')
 const describeError = ref(false)
-const openEditor = () => {
-  editing.value = true
-}
 
 const updateDescription = () => {
   const err = describeCard(boardId, cardId, describeText)
@@ -42,32 +36,44 @@ const updateDescription = () => {
 </script>
 
 <template>
-  <Modal :routeToPush="`/board/${boardId}`">
-    <div p5 bg-white relative>
-      <TooltipCard class="tip" :boardId="boardId" :cardId="cardId" @deleteCard="goToBoard" />
-      <h1>{{ card.title }}</h1>
-      <div class="desc-edit" v-if="editing">
-        <form @submit.prevent="updateDescription">
+  <DialogShade>
+    <div class="card" v-click-outside="goToBoard">
+      <!-- <TooltipCard class="tip" :boardId="boardId" :cardId="cardId" @deleteCard="goToBoard" /> -->
+      <h2 class="card__title">{{ card.title }}</h2>
+      <div class="card__content">
+        <form @submit.prevent="updateDescription" v-if="editing">
           <textarea v-model="describeText" bg-dark-1 bg-opacity-5 b-1 b-gray-2></textarea>
-          <div flex items-center justify-between mt-2>
-            <input type="submit" value="save" class="btnSmall" />
-            <BtnClose />
-          </div>
+
+          <input type="submit" value="save" class="btn" />
+          <button class="btn-cancel mr2" @click.prevent="editing = false">cancel</button>
+
           <div text-sm color-red v-if="describeError">{{ describeError }}</div>
         </form>
-      </div>
-      <div class="desc" v-else>
-        <div v-if="card.description">
-          {{ card.description }}
+
+        <div v-else>
+          <div v-if="card.description">
+            {{ card.description }}
+          </div>
+          <div v-else color-slate-5>(card has no description)</div>
+          <button class="btn" @click="editing = true" mt-4>edit description</button>
         </div>
-        <div v-else color-slate-5>(card has no description)</div>
-        <button class="btnSmall" @click="openEditor" mt-8>edit description</button>
       </div>
     </div>
-  </Modal>
+  </DialogShade>
 </template>
 
 <style scoped>
+.card {
+  @apply bg-white relative w-sm h-sm;
+}
+
+.card__title {
+  @apply bg-slate-2 p5 border-b-1 border-slate-3;
+}
+
+.card__content {
+  @apply px5;
+}
 .tip {
   position: absolute;
   top: 1rem;

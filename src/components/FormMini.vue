@@ -23,13 +23,13 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <div class="form-mini">
-    <form v-if="modelValue" @submit.prevent="onSubmit" class="form-mini" relative p1>
-      <input type="text" id="content" v-model="content" :placeholder="placeholder ?? ''" mb-1 w-full />
+  <div class="miniform">
+    <form v-if="modelValue" @submit.prevent="onSubmit" class="miniform-form">
+      <input type="text" class="miniform-input" id="content" v-model="content" :placeholder="placeholder ?? ''" />
       <div flex items-center>
-        <input type="submit" :value="submitVal" class="btnSmall" />
-        <BtnClose @click.prevent="emit('update:modelValue', false)"></BtnClose>
-        <div text-sm text-red v-if="errorMsg">{{ errorMsg }}</div>
+        <button type="submit" class="btn mr1">{{ submitVal }}</button>
+        <button class="btn-cancel" @click.prevent="emit('update:modelValue', false)">cancel</button>
+        <div class="text-error" v-if="errorMsg">{{ errorMsg }}</div>
       </div>
     </form>
     <slot name="button" v-else>
@@ -39,3 +39,13 @@ const onSubmit = () => {
     </slot>
   </div>
 </template>
+
+<style scoped>
+.miniform-form {
+  @apply relative p1;
+}
+
+.miniform-input {
+  @apply mb-1 w-full;
+}
+</style>

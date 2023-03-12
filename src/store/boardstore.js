@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uid } from 'uuid'
+import { uid } from 'uid'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useStorage } from '@vueuse/core'
@@ -18,7 +19,7 @@ export const useBoardStore = defineStore('boards', () => {
   })
 
   const newBoard = (creator, boardName) => {
-    let id = uuidv4()
+    let id = uid()
     boards.value[id] = {
       id,
       name: boardName,
@@ -33,10 +34,10 @@ export const useBoardStore = defineStore('boards', () => {
 
   const addListToBoard = (boardId, listTitle) => {
     let board = boards.value[boardId]
-    let newListId = uuidv4()
+    let newListId = uid()
 
     if (!listTitle || listTitle.length < 1) {
-      return 'list needs a title!'
+      return 'title must not be blank'
     }
 
     board.lists[newListId] = {
@@ -69,11 +70,21 @@ export const useBoardStore = defineStore('boards', () => {
   const moveCardWithinList = (boardId, listId, posToMoveFrom, posToMoveTo) => {
     let board = boards.value[boardId]
     let list = board.lists[listId]
+    let cardIds = [...list.cardIds]
 
-    if (list.cardIds[posToMoveFrom] && list.cardIds[posToMoveTo]) {
-      let idToMove = list.cardIds.splice(posToMoveFrom, 1)[0]
-      list.cardIds.splice(posToMoveTo, 0, idToMove)
+    if (!cardIds[posToMoveFrom]) return false
+
+    if (cardIds[posToMoveTo]) {
+      let idToMove = cardIds.splice(posToMoveFrom, 1)[0]
+      cardIds.splice(posToMoveTo, 0, idToMove)
+      list.cardIds = cardIds
       return true
+    }
+
+    if (posToMoveTo >= cardIds.length) {
+      let idToMove = cardIds.splice(posToMoveFrom, 1)[0]
+      cardIds.push(idToMove)
+      list.cardIds = cardIds
     }
 
     return false
@@ -102,10 +113,10 @@ export const useBoardStore = defineStore('boards', () => {
     let list = board.lists[listId]
 
     if (!cardTitle || cardTitle.length < 1) {
-      return 'card needs a title!'
+      return 'title must not be blank'
     }
 
-    let newCardId = uuidv4()
+    let newCardId = uid()
     let card = {
       id: newCardId,
       title: cardTitle,
@@ -129,7 +140,7 @@ export const useBoardStore = defineStore('boards', () => {
 
   const renameList = (boardId, listId, newTitle) => {
     if (!newTitle || newTitle.length < 1) {
-      return 'you need a title!'
+      return 'title must not be blank'
     }
     let board = boards.value[boardId]
     if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
@@ -141,7 +152,7 @@ export const useBoardStore = defineStore('boards', () => {
 
   const renameCard = (boardId, cardId, newTitle) => {
     if (!newTitle || newTitle.length < 1) {
-      return 'you need a title!'
+      return 'title must not be blank'
     }
     let board = boards.value[boardId]
     if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)

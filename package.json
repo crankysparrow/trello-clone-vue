@@ -12,6 +12,7 @@
     "@unocss/reset": "^0.45.18",
     "click-outside-vue3": "^4.0.1",
     "pinia": "^2.0.22",
+    "uid": "^2.0.1",
     "vue": "^3.2.37"
   },
   "devDependencies": {

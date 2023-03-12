@@ -19,21 +19,23 @@ const getList = (listId) => board.value.lists[listId]
 <template>
   <div class="board" relative w-full>
     <router-view :boardId="id"></router-view>
-    <div container mx-auto p4 pb0 w-full>
-      <h1 mb-3>Board: {{ board?.name }}</h1>
-    </div>
+    <div grid class="grid-rows-[auto_1fr] h-full">
+      <div container mx-auto p4 pb0 w-full>
+        <h1 mb-3>Board: {{ board?.name }}</h1>
+      </div>
 
-    <Lists
-      v-if="board?.lists"
-      :lists="board.lists"
-      :listOrder="board.listOrder"
-      @moveList="(posToMoveFrom, posToMoveTo) => moveList(id, posToMoveFrom, posToMoveTo)">
-      <template #listItem="{ listId, i }">
-        <List :list="getList(listId)" :pos="i" />
-      </template>
-      <template #lastCol>
-        <CreateList :boardId="id" />
-      </template>
-    </Lists>
+      <Lists
+        v-if="board?.lists"
+        :lists="board.lists"
+        :listOrder="board.listOrder"
+        @moveList="(posToMoveFrom, posToMoveTo) => moveList(id, posToMoveFrom, posToMoveTo)">
+        <template #listItem="{ listId, i }">
+          <List :list="getList(listId)" :pos="i" />
+        </template>
+        <template #lastCol>
+          <CreateList :boardId="id" />
+        </template>
+      </Lists>
+    </div>
   </div>
 </template>

@@ -11,7 +11,6 @@ import './style.scss'
 import home from './pages/index.vue'
 import boardPage from './pages/board/[id].vue'
 import cardPage from './pages/board/[id]/card/[cardId].vue'
-import cardModal from '~/pages/board/[id]/card.vue'
 
 const routes = [
   { path: '/', component: home },

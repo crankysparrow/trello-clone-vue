@@ -1,11 +1,9 @@
 <script setup>
-import BtnClose from '~/components/BtnClose.vue'
-import BtnAdd from '~/components/BtnAdd.vue'
 import { useBoardStore } from '~/store/boardstore'
 import { ref, defineProps } from 'vue'
 import FormMini from './FormMini.vue'
+import AddForm from './AddForm.vue'
 
-const newListName = ref('')
 const showForm = ref(false)
 const errorMsg = ref(false)
 
@@ -28,13 +26,11 @@ const create = (newName) => {
 
 <template>
   <div class="list-add">
-    <FormMini
-      p-2
-      bg-slate-2
+    <AddForm
       v-model="showForm"
       placeholder="list title"
-      btnName="add list"
-      :errorMsg="errorMsg"
+      valueShow="add list"
+      :valueError="errorMsg"
       @submit="(newName) => create(newName)" />
     <!--
       <div v-if="showForm" class="new-list-form" relative>

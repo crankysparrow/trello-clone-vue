@@ -2,9 +2,15 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Unocss from 'unocss/vite'
-import { presetIcons, presetMini, presetAttributify, transformerDirectives, presetUno } from 'unocss'
+import {
+  presetIcons,
+  presetMini,
+  presetAttributify,
+  transformerDirectives,
+  presetUno,
+} from 'unocss'
 import { resolve } from 'path'
-import { presetReasonable } from './unoReasonableColors/index'
+// import { presetReasonable } from './unoReasonableColors/index'
 import postcssNesting from 'postcss-nesting'
 
 // https://vitejs.dev/config/
@@ -20,15 +26,22 @@ export default defineConfig({
 
     Unocss({
       shortcuts: {
-        btn: 'bg-cyan-7 text-slate-1 px-4 py-2 lh-none font-semibold outline-transparent rounded-none transition-all hover:bg-cyan-6 text-gray-1 cursor-pointer focus:outline-2 focus:outline-blue-5 outline-solid',
-        btnReset: 'bg-transparent p-0 text-dark hover:bg-transparent ',
+        btn: 'bg-cyan-7 text-slate-1 text-sm px-3 py-2 lh-none font-semibold outline-transparent rounded-none transition-all hover:bg-cyan-6 text-gray-1 cursor-pointer focus:outline-2 focus:outline-blue-5 outline-solid',
+        'btn-cancel':
+          'btn bg-transparent text-dark-1 hover:bg-slate-7 hover:text-white focus:outline-blue-2',
+        'btn-reset': 'bg-transparent p-0 text-dark hover:bg-transparent ',
         btnSmall: 'btn bg-cyan-7 text-slate-1 px2 py1 leading-none font-medium text-3.5',
+        'text-error': 'text-red text-xs',
       },
       rules: [],
       presets: [
         presetUno(),
         presetIcons({
           warn: true,
+          // extraProperties: {
+          //   width: '2em',
+          //   height: '2em',
+          // },
         }),
         presetAttributify(),
       ],
