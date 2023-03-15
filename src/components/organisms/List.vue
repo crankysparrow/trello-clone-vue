@@ -1,10 +1,9 @@
 <script setup>
 import { defineProps, ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import TooltipList from '~/components/TooltipList.vue'
-import Card from '~/components/Card.vue'
+import Card from '~/components/organisms/Card.vue'
 import CreateCard from '~/components/CreateCard.vue'
-import TextEditable from '~/components/TextEditable.vue'
+import TextEditable from '~/components/atoms/TextEditable.vue'
 
 const { moveCardWithinList, moveCardBetweenLists, renameList } = useBoardStore()
 
@@ -67,16 +66,15 @@ function drop(e) {
 
 <template>
   <div class="list" v-if="list">
-    <!-- <h2>{{ list.title }}</h2> -->
     <TextEditable
-      class="list-title"
+      class="list-title px2"
       :title="list.title"
       @updateTitle="updateTitle"
       @dragover="dragOver"
       @drop="drop"
       :data-pos="0" />
 
-    <div class="card-items relative">
+    <div class="card-items">
       <div
         v-for="(cardId, i) in list.cardIds"
         class="card-outer"
@@ -108,24 +106,21 @@ function drop(e) {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .card-outer {
-  @apply py-1;
+  @apply py-1 px-2;
 }
 
 .card-item {
   @apply outline-2 outline-blue;
 }
+
 .card-outer.drag-card-over .card-item {
   outline-style: solid;
 }
-.tip-container {
-  right: 0.5rem;
-  top: 0.5rem;
-}
 
 .card-items {
-  z-index: 2;
+  @apply relative z2;
 }
 
 .list-title {

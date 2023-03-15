@@ -1,6 +1,5 @@
 <script setup>
-import FormMini from '~/components/FormMini.vue'
-import AddForm from '~/components/AddForm.vue'
+import AddForm from '~/components/molecules/AddForm.vue'
 import { ref, defineProps } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 

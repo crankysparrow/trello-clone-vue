@@ -1,9 +1,10 @@
 <script setup>
-import BoardsList from '../components/BoardsList.vue'
+import BoardsGrid from '../components/organisms/BoardsGrid.vue'
+import PageWrap from '../components/organisms/PageWrap.vue'
 </script>
 
 <template>
-  <div>
-    <BoardsList />
-  </div>
+  <PageWrap title="Your Boards" :rows="true">
+    <BoardsGrid />
+  </PageWrap>
 </template>

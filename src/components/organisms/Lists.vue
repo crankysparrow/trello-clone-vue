@@ -48,70 +48,42 @@ function drop(e) {
 </script>
 
 <template>
-  <div :class="isDragging ? 'lists dragging' : 'lists'" pt2 pb6>
+  <div
+    v-for="(id, i) in listOrder"
+    class="list-outer"
+    :key="id"
+    :data-pos="i"
+    @dragover="dragOver"
+    @dragleave="dragLeave"
+    @drop="drop">
     <div
-      v-for="(id, i) in listOrder"
-      class="list-outer droppable"
-      :key="id"
+      class="list-inner"
+      draggable="true"
+      :id="`list-${id}`"
       :data-pos="i"
-      @dragover="dragOver"
-      @dragleave="dragLeave"
-      @drop="drop">
-      <div
-        p2
-        bg-slate-2
-        class="list-inner"
-        draggable="true"
-        :id="`list-${id}`"
-        :data-pos="i"
-        @dragstart="dragStart"
-        @dragend="dragEnd">
-        <slot name="listItem" :listId="id" :i="i"></slot>
-      </div>
+      @dragstart="dragStart"
+      @dragend="dragEnd">
+      <slot name="listItem" :listId="id" :i="i"></slot>
     </div>
-    <slot name="lastCol"></slot>
   </div>
+  <slot name="lastCol"></slot>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .lists {
-  max-width: 100%;
-  overflow-x: auto;
-  display: grid;
-  grid-auto-columns: 300px;
-  grid-template-rows: auto;
-  grid-auto-flow: column;
-  height: auto;
-  .list-outer {
-    position: relative;
-    margin: 0 10px;
-    width: 280px;
-    &:after {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      content: '';
-      position: absolute;
-      pointer-events: none;
-      z-index: 4;
-    }
-  }
+  @apply pt2 pb6 max-w-full overflow-x-auto grid grid-flow-col;
+  grid-auto-columns: 18rem;
 }
+
 .list-outer {
-  position: relative;
+  @apply relative mx-a w-69;
+}
+
+.list-inner {
+  @apply bg-slate-2;
 }
 
 .drag-over {
   outline: 3px dashed green;
-}
-</style>
-
-<style lang="scss">
-// .lists.dragging .list-outer:after {
-//   pointer-events: all;
-// }
-.lists.dragging .list-outer.dragging-list:after {
-  pointer-events: none;
 }
 </style>

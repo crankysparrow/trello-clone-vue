@@ -2,9 +2,7 @@
 import { ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
-import DialogShade from '~/components/DialogShade.vue'
-import TooltipCard from '~/components/TooltipCard.vue'
-import BtnClose from '~/components/BtnClose.vue'
+import DialogShade from '~/components/atoms/DialogShade.vue'
 
 const router = useRouter()
 const route = useRoute()

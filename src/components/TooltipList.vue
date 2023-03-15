@@ -1,7 +1,6 @@
 <script setup>
 import { ref, defineEmits, defineProps } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import FormMini from '~/components/FormMini.vue'
 
 const { deleteListFromBoard, renameList } = useBoardStore()
 
@@ -47,7 +46,7 @@ const listRename = (newName) => {
           </button>
         </li>
         <li>
-          <FormMini
+          <!-- <FormMini
             submitVal="rename"
             btnName="rename list"
             v-model="showRenameForm"
@@ -59,7 +58,7 @@ const listRename = (newName) => {
                 rename list
               </button>
             </template>
-          </FormMini>
+          </FormMini> -->
         </li>
       </ul>
     </div>

@@ -10,8 +10,21 @@ const props = defineProps({
 })
 
 const content = ref('')
+const input = ref(null)
+const openButton = ref(null)
 
 const emit = defineEmits(['submit', 'update:modelValue'])
+
+const openForm = () => {
+  emit('update:modelValue', 'true')
+  setTimeout(() => input.value.focus())
+}
+
+const closeForm = () => {
+  emit('update:modelValue', 'false')
+  // setTimeout(() => openButton.value.focus())
+}
+
 const onSubmit = () => {
   emit('submit', content.value)
   content.value = ''
@@ -26,15 +39,16 @@ const onSubmit = () => {
         class="addform-input"
         id="content"
         v-model="content"
+        ref="input"
         :placeholder="placeholder" />
       <div class="addform-btns">
         <button type="submit" class="btn mr1">{{ valueSubmit }}</button>
-        <button class="btn-cancel" @click.prevent="emit('update:modelValue', false)">cancel</button>
+        <button class="btn-cancel" @click.prevent="closeForm">cancel</button>
       </div>
       <div class="text-error" mt1 v-if="valueError">{{ valueError }}</div>
     </form>
     <div v-else>
-      <button class="addform-btn" @click="emit('update:modelValue', 'true')">
+      <button class="addform-btn" @click="openForm" ref="openButton">
         <div i-carbon:add mr1></div>
         {{ valueShow }}
       </button>
@@ -43,6 +57,12 @@ const onSubmit = () => {
 </template>
 
 <style scoped>
+.addform {
+  @apply bg-slate3;
+}
+.addform-form {
+  @apply p2;
+}
 .addform-input {
   @apply w-full;
 }
@@ -50,11 +70,11 @@ const onSubmit = () => {
   @apply mt-2;
 }
 .addform-btn {
-  @apply btn text-dark-1 fw-500 bg-slate1 bg-op80 w-full flex items-center;
+  @apply btn-reset color-inherit fw-500 w-full flex items-center p2;
 }
 
 .addform-btn:hover,
 .addform-btn:focus {
-  @apply bg-slate3;
+  @apply bg-slate7 text-white;
 }
 </style>

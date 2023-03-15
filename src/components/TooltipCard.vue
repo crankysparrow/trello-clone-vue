@@ -1,7 +1,6 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import FormMini from '~/components/FormMini.vue'
 
 const { deleteCardFromBoard, renameCard } = useBoardStore()
 
@@ -45,21 +44,6 @@ const doDelete = () => {
             <div i-carbon:trash-can></div>
             delete card
           </button>
-        </li>
-        <li>
-          <FormMini
-            submitVal="rename"
-            btnName="rename list"
-            v-model="showRenameForm"
-            :errorMsg="renameError"
-            @submit="(newName) => doRename(newName)">
-            <template #button>
-              <button btn-reset p2 fw400 text-sm hover:bg-gray1 focus:bg-gray1 @click="() => (showRenameForm = true)">
-                <div i-carbon:term></div>
-                rename card
-              </button>
-            </template>
-          </FormMini>
         </li>
       </ul>
     </div>

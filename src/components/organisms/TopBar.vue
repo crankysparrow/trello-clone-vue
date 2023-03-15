@@ -1,6 +1,6 @@
 <script>
 import { ref } from 'vue'
-import { useUserStore } from '../store/userstore'
+// import { useUserStore } from '../../store/userstore'
 
 // const userStore = useUserStore()
 const profileOpen = ref(false)
@@ -11,8 +11,8 @@ const profileBtn = () => {
 </script>
 
 <template>
-  <div class="topbar" bg-cyan-8>
-    <div container px-5 mx-auto flex items-center justify-between h-full relative>
+  <div class="topbar">
+    <div class="topbar-inner">
       <router-link to="/" btn text-white bg="cyan-7 op-50 hover:op-80"> TRELLO CLONE </router-link>
 
       <button
@@ -33,9 +33,13 @@ const profileBtn = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .topbar {
-  width: 100%;
+  @apply w-full bg-cyan-8;
   height: 50px;
+}
+
+.topbar-inner {
+  @apply container mx-auto flex items-center justify-between h-full relative;
 }
 </style>

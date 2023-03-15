@@ -1,17 +1,9 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import Pages from 'vite-plugin-pages'
 import Unocss from 'unocss/vite'
-import {
-  presetIcons,
-  presetMini,
-  presetAttributify,
-  transformerDirectives,
-  presetUno,
-} from 'unocss'
+import { presetIcons, presetAttributify, transformerDirectives, presetUno } from 'unocss'
 import { resolve } from 'path'
 // import { presetReasonable } from './unoReasonableColors/index'
-import postcssNesting from 'postcss-nesting'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,14 +17,40 @@ export default defineConfig({
     vue(),
 
     Unocss({
-      shortcuts: {
-        btn: 'bg-cyan-7 text-slate-1 text-sm px-3 py-2 lh-none font-semibold outline-transparent rounded-none transition-all hover:bg-cyan-6 text-gray-1 cursor-pointer focus:outline-2 focus:outline-blue-5 outline-solid',
-        'btn-cancel':
-          'btn bg-transparent text-dark-1 hover:bg-slate-7 hover:text-white focus:outline-blue-2',
-        'btn-reset': 'bg-transparent p-0 text-dark hover:bg-transparent ',
-        btnSmall: 'btn bg-cyan-7 text-slate-1 px2 py1 leading-none font-medium text-3.5',
-        'text-error': 'text-red text-xs',
-      },
+      shortcuts: [
+        {
+          'text-error': 'text-red text-xs',
+          'btn-reset': 'text-inherit p-0 bg-transparent hover:bg-transparent focus:bg-transparent',
+          // btn: 'text-slate-1 bg-cyan-7 hover:bg-cyan-6 focus:bg-cyan-6 px-3 py-2 lh-none font-500 text-sm rounded-none transition-all cursor-pointer',
+          // btn: 'bg-cyan-7 text-slate-1 text-sm px-3 py-2 lh-none font-500 rounded-none transition-all cursor-pointer hover:bg-cyan-6',
+          // 'btn-cancel':
+          //   'text-dark-1 bg-transparent hover:bg-opacity-40 hover:bg-slate-5 focus:bg-slate-5 focus:bg-opacity-40',
+          // 'btn-reset': 'bg-transparent p0 text-inherit hover:bg-transparent focus:bg-transparent',
+          wrapper: 'container mx-auto ',
+        },
+        // [
+        // /^(btn)-(cancel|reset)/,
+        // ([_, __, style]) => {
+        //   let text = 'slate-1'
+        //   let bg = 'cyan-7'
+        //   let bgInteract = ['cyan-6']
+        //   let other = ''
+
+        //   if (style === 'cancel') {
+        //     text = 'dark-1'
+        //     bg = 'transparent'
+        //     bgInteract = ['slate-5', 'opacity-40']
+        //   } else if (style === 'reset') {
+        //     text = 'inherit'
+        //     bg = 'transparent'
+        //     bgInteract = ['transparent']
+        //     other = 'p-0'
+        //   }
+        //   bgInteract = bgInteract.map((opt) => `hover:bg-${opt} focus:bg-${opt}`).join(' ')
+        //   return `text-${text} bg-${bg} ${bgInteract} ${other}`
+        // },
+        // ],
+      ],
       rules: [],
       presets: [
         presetUno(),

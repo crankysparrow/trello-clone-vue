@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import routes from '~pages'
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
-import './style.scss'
+import './style.css'
 
 import home from './pages/index.vue'
 import boardPage from './pages/board/[id].vue'
