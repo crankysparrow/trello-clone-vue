@@ -1,8 +1,5 @@
-<script>
+<script setup>
 import { ref } from 'vue'
-// import { useUserStore } from '../../store/userstore'
-
-// const userStore = useUserStore()
 const profileOpen = ref(false)
 
 const profileBtn = () => {

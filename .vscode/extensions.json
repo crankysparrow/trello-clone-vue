@@ -1,8 +1,3 @@
 {
-	"recommendations": [
-		"vue.volar",
-		"antfu.unocss",
-		"antfu.vite",
-		"antfu.iconify"
-	]
+  "recommendations": ["antfu.unocss", "antfu.vite", "antfu.iconify"]
 }

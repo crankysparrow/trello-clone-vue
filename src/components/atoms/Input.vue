@@ -1,22 +1,45 @@
-<script setup>
-const props = defineProps({
-  label: { type: String, required: false },
-  id: { type: String, required: true },
-  type: { type: String, required: false, default: 'text' },
-  modelValue: { type: String, default: '' },
+<script setup lang="ts">
+import { defineExpose, ref, inject } from 'vue'
+
+const htmlId: () => string = inject('htmlId')!
+
+export interface Props {
+  label?: string
+  id?: string
+  type?: string
+  modelValue: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  label: undefined,
+  id: undefined,
+  type: 'text',
 })
 
-const emit = defineEmits(['update:modelValue'])
+const inputid = props.id || htmlId()
+
+defineEmits(['update:modelValue'])
+
+const inputEl = ref<HTMLInputElement | null>(null)
+
+const focus = () => {
+  inputEl.value?.focus()
+}
+
+defineExpose({
+  focus,
+})
 </script>
 
 <template>
   <div class="input">
     <label v-if="label" :for="id">{{ label }}</label>
     <input
-      :id="id"
+      ref="inputEl"
+      :id="inputid"
       :type="type"
       v-model="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)" />
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)" />
   </div>
 </template>
 

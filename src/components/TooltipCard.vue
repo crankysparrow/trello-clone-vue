@@ -2,45 +2,49 @@
 import { ref, defineProps, defineEmits } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 
-const { deleteCardFromBoard, renameCard } = useBoardStore()
+const { deleteCardFromBoard } = useBoardStore()
+
+// TODO: remove?
 
 const open = ref(false)
-const showRenameForm = ref(false)
-const renameError = ref(false)
+// const showRenameForm = ref(false)
+// const renameError = ref(false)
 
 const props = defineProps({
   cardId: { type: String, required: true },
   boardId: { type: String, required: true },
 })
 
-const doRename = (newName) => {
-  const err = renameCard(props.boardId, props.cardId, newName)
-  if (err) {
-    renameError.value = err
-  } else {
-    renameError.value = false
-    showRenameForm.value = false
-    open.value = false
-  }
-}
+// const doRename = (newName) => {
+//   const err = renameCard(props.boardId, props.cardId, newName)
+//   if (err) {
+//     renameError.value = err
+//   } else {
+//     renameError.value = false
+//     showRenameForm.value = false
+//     open.value = false
+//   }
+// }
 
 const emit = defineEmits(['deleteCard'])
 
 const doDelete = () => {
-  const err = deleteCardFromBoard(props.boardId, props.cardId)
+  deleteCardFromBoard(props.boardId, props.cardId)
   emit('deleteCard')
 }
 </script>
 
 <template>
   <div class="tooltip-container" absolute>
-    <button class="tip-control" @click="() => (open = !open)" btn-reset block>
+    <button class="tip-control" @click="() => (open = !open)">
       <div i-carbon:menu />
     </button>
     <div class="tooltip" v-if="open" v-click-outside="() => (open = false)" shadow bg-coolgray-50>
       <ul list-none p-0>
         <li>
-          <button @click="doDelete" btn-reset p2 fw-400 text="red-4 sm" hover="bg-red-1 text-red-7">
+          <button
+            @click="doDelete"
+            class="red-4 text-3 tooltip-btn hover:bg-red-1 hover:text-red-7">
             <div i-carbon:trash-can></div>
             delete card
           </button>
@@ -63,12 +67,14 @@ const doDelete = () => {
   left: auto;
   z-index: 3;
   top: 100%;
-  width: 250px;
+  width: 200px;
 }
 ul button {
-  display: flex;
   width: 100%;
   line-height: 1;
-  justify-content: space-between;
+}
+
+.tooltip-btn {
+  @apply flex p2 fw-400;
 }
 </style>

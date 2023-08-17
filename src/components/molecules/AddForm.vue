@@ -22,7 +22,6 @@ const openForm = () => {
 
 const closeForm = () => {
   emit('update:modelValue', 'false')
-  // setTimeout(() => openButton.value.focus())
 }
 
 const onSubmit = () => {

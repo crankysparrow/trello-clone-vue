@@ -3,9 +3,10 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import vClickOutside from 'click-outside-vue3'
 import { createRouter, createWebHistory } from 'vue-router'
+import { IDPlugin } from './plugins/html-ids'
 // import routes from '~pages'
 import '@unocss/reset/tailwind.css'
-import 'uno.css'
+import 'virtual:uno.css'
 import './style.css'
 
 import home from './pages/index.vue'
@@ -32,4 +33,5 @@ const app = createApp(App)
 app.use(router)
 app.use(pinia)
 app.use(vClickOutside)
+app.use(IDPlugin)
 app.mount('#app')

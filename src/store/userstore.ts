@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useStorage } from '@vueuse/core'
@@ -9,7 +8,7 @@ export const useUserStore = defineStore('user', () => {
   const name = ref(useStorage('user', ''))
   const id = ref(useStorage('userId', uid()))
 
-  function setName(newName) {
+  function setName(newName: string) {
     name.value = newName
   }
 

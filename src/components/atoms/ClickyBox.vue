@@ -1,18 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 
-const props = defineProps({
-  linkTo: { type: String, required: false },
-  color: { type: String, default: 'dark' },
-  size: { type: String, default: 'lg' },
+export interface props {
+  linkTo?: string
+  color?: 'dark' | 'light'
+  size?: 'lg' | 'sm'
+}
+
+const props = withDefaults(defineProps<props>(), {
+  color: 'dark',
+  size: 'lg',
 })
 
 const className = computed(() => `clicky-box ${props.color} ${props.size}`)
 
-const el = ref(null)
+const el = ref<HTMLButtonElement | HTMLAnchorElement | null>(null)
+
+const focus = () => {
+  el.value?.focus()
+}
 
 defineExpose({
   el,
+  focus,
 })
 </script>
 
@@ -27,11 +37,11 @@ defineExpose({
 
 <style scoped>
 .clicky-box {
-  @apply block p-4 my-2 mr-2 rounded-sm flex  items-end;
+  @apply block p-2 rounded-sm flex items-center w-full font-500;
 }
 
 .clicky-box.lg {
-  @apply w-64 h-30 max-w-64;
+  @apply min-h-30 items-end p-4;
 }
 
 .clicky-box.dark {
@@ -39,7 +49,7 @@ defineExpose({
 }
 
 .clicky-box.light {
-  @apply bg-slate-2 bg-opacity-90 text-dark-2 font-400;
+  @apply bg-slate-3 bg-opacity-90;
 }
 
 .clicky-box:hover,

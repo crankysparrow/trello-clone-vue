@@ -1,5 +1,5 @@
 <script setup>
-import Button from '../atoms/Button.vue'
+import Button from '~/components/atoms/Button.vue'
 
 const props = defineProps({
   labelSubmit: { type: String, default: 'submit' },
@@ -15,7 +15,7 @@ const cancelSubmit = (e) => {
 
 <template>
   <div class="form-btns">
-    <Button type="button" @click="cancelSubmit" color="subdued" class="mr2">
+    <Button type="button" @click="cancelSubmit" btn-style="subdued" class="mr2">
       {{ labelCancel }}
     </Button>
     <Button @click.prevent="$emit('submit')" type="submit">{{ labelSubmit }}</Button>
@@ -24,6 +24,6 @@ const cancelSubmit = (e) => {
 
 <style scoped>
 .form-btns {
-  @apply px-4 py-0 text-right;
+  @apply py-0 text-right;
 }
 </style>

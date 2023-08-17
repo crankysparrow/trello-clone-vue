@@ -1,47 +1,72 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps, defineEmits, ref } from 'vue'
 
 const isDragging = ref(false)
-const props = defineProps({
-  lists: { type: Object, required: true },
-  listOrder: { type: Array, required: true },
-})
+
+export interface props {
+  lists: Record<string, string[]>
+  listOrder: string[]
+}
+defineProps<props>()
+
+// const props = defineProps({
+//   lists: { type: Object, required: true },
+//   listOrder: { type: Array, required: true },
+// })
 
 const emit = defineEmits(['moveList'])
 
-function dragOver(e) {
+function dragOver(e: DragEvent) {
   if (isDragging.value) {
     e.preventDefault()
-    e.currentTarget.classList.add('drag-over')
+    let target = e.currentTarget
+    if (target instanceof HTMLElement) {
+      target.classList.add('drag-over')
+    }
   }
 }
 
-function dragStart(e) {
-  if (!e.target.classList.contains('list-inner')) return
-  e.target.parentElement.classList.add('dragging-list')
+function dragStart(e: DragEvent) {
+  let target = e.target
+  if (!(target instanceof HTMLElement) || !target.classList.contains('list-inner')) return
+
+  target.parentElement?.classList.add('dragging-list')
   isDragging.value = true
-  e.dataTransfer.setData('text/plain', e.target.id)
+
+  e.dataTransfer?.setData('text/plain', target.id)
 }
 
-function dragEnd(e) {
+function dragEnd() {
   isDragging.value = false
 }
 
-function dragLeave(e) {
+function dragLeave(e: DragEvent) {
   if (isDragging.value) {
-    e.currentTarget.classList.remove('drag-over')
+    let target = e.currentTarget
+    if (target instanceof HTMLElement) {
+      target.classList.remove('drag-over')
+    }
   }
 }
 
-function drop(e) {
-  const posToMoveTo = e.currentTarget.dataset['pos']
+function drop(e: DragEvent) {
+  if (!isDragging.value) return
 
-  if (isDragging.value && posToMoveTo) {
-    const id = e.dataTransfer.getData('text/plain')
-    const el = document.getElementById(id)
-    el.parentElement.classList.remove('dragging-list')
-    e.currentTarget.classList.remove('drag-over')
-    const posToMoveFrom = el.dataset['pos']
+  let target = e.currentTarget
+  if (!(target instanceof HTMLElement)) return
+
+  const id = e.dataTransfer?.getData('text/plain')
+  if (!id) return
+
+  const el = document.getElementById(id)
+  if (!el || !(el instanceof HTMLElement)) return
+
+  el.parentElement?.classList.remove('dragging-list')
+  target.classList.remove('drag-over')
+
+  const posToMoveTo = target.dataset['pos']
+  const posToMoveFrom = el.dataset['pos']
+  if (posToMoveTo && posToMoveFrom) {
     emit('moveList', posToMoveFrom, posToMoveTo)
   }
 }

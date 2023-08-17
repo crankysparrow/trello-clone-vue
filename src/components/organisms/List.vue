@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps, ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import Card from '~/components/organisms/Card.vue'
-import CreateCard from '~/components/CreateCard.vue'
 import TextEditable from '~/components/atoms/TextEditable.vue'
+import InputForm from '~/components/molecules/InputForm.vue'
 
-const { moveCardWithinList, moveCardBetweenLists, renameList } = useBoardStore()
+const { moveCardWithinList, moveCardBetweenLists, renameList, addCardToBoard } = useBoardStore()
 
 const props = defineProps({
   list: { type: Object, required: true },
@@ -14,52 +14,59 @@ const props = defineProps({
 
 const isDragging = ref(false)
 const draggingId = ref('')
+const newCardName = ref('')
 
-const updateTitle = (newTitle) => {
+const updateTitle = (newTitle: string) => {
   renameList(props.list.boardId, props.list.id, newTitle)
 }
 
-function dragOver(e) {
+function dragOver(e: DragEvent) {
   e.preventDefault()
-  if (isDragging.value) {
+  if (isDragging.value && e.currentTarget instanceof HTMLElement) {
     e.currentTarget.classList.add('drag-card-over')
   }
 }
 
-function dragStart(e) {
-  if (!e.target.classList.contains('card-item')) return
+function dragStart(e: DragEvent) {
+  let target = e.target
+  if (!(target instanceof HTMLElement) || !target.classList.contains('card-item')) return
+
   isDragging.value = true
-  draggingId.value = e.target.id
-  e.dataTransfer.setData('text/plain', e.target.id)
+  draggingId.value = target.id
+  e.dataTransfer?.setData('text/plain', target.id)
 }
 
-function dragEnd(e) {
+function dragEnd() {
   isDragging.value = false
 }
 
-function dragLeave(e) {
-  if (isDragging.value) {
+function dragLeave(e: DragEvent) {
+  if (isDragging.value && e.currentTarget instanceof HTMLElement) {
     e.currentTarget.classList.remove('drag-card-over')
   }
 }
 
-function drop(e) {
-  const posToMoveTo = e.currentTarget.dataset['pos']
+function drop(e: DragEvent) {
+  let target = e.currentTarget
+  if (!(target instanceof HTMLElement)) return
 
-  if (posToMoveTo) {
-    const id = e.dataTransfer.getData('text/plain')
-    const el = document.getElementById(id)
-    e.currentTarget.classList.remove('drag-card-over')
+  const id = e.dataTransfer?.getData('text/plain')
+  if (!id) return
 
-    const listId = el.dataset['listid']
+  const el = document.getElementById(id)
+  if (!el || !(el instanceof HTMLElement)) return
+  target.classList.remove('drag-card-over')
 
-    const posToMoveFrom = el.dataset['pos']
+  const listId = el.dataset['listid']
+  const posToMoveFrom = el.dataset['pos']
+  const posToMoveTo = target.dataset['pos']
 
-    if (listId !== props.list.id) {
-      moveCardBetweenLists(props.list.boardId, listId, props.list.id, posToMoveFrom, posToMoveTo)
-    } else {
-      moveCardWithinList(props.list.boardId, props.list.id, posToMoveFrom, posToMoveTo)
-    }
+  if (!listId || !posToMoveFrom || !posToMoveTo) return
+
+  if (listId !== props.list.id) {
+    moveCardBetweenLists(props.list.boardId, listId, props.list.id, +posToMoveFrom, +posToMoveTo)
+  } else {
+    moveCardWithinList(props.list.boardId, props.list.id, +posToMoveFrom, +posToMoveTo)
   }
 }
 </script>
@@ -96,17 +103,24 @@ function drop(e) {
       </div>
     </div>
 
-    <CreateCard
-      pt1
-      :boardId="list.boardId"
-      :listId="list.id"
+    <InputForm
+      :toggleable="true"
+      labelSubmit="create"
+      labelCancel="cancel"
+      v-model="newCardName"
       :data-pos="list.cardIds.length"
       @dragover="dragOver"
-      @drop="drop" />
+      @drop="drop"
+      @submit="() => addCardToBoard(list.boardId, list.id, newCardName)">
+      <template #toggle>
+        <div i-carbon:add class="mr1"></div>
+        add card
+      </template>
+    </InputForm>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="css">
 .card-outer {
   @apply py-1 px-2;
 }

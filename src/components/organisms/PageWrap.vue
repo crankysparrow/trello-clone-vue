@@ -1,5 +1,5 @@
 <script setup>
-import HeadingPage from '../atoms/HeadingPage.vue'
+import HeadingPage from '~/components/atoms/HeadingPage.vue'
 
 defineProps({
   title: { type: String, required: true },
@@ -22,10 +22,6 @@ defineProps({
   @apply relative w-full grid h-full;
   grid-template-rows: auto 1fr;
 }
-
-.content-wrap {
-}
-
 .content-wrap.columns {
   @apply grid pb6 px-4 overflow-x-auto grid-flow-col max-w-full h-full;
   grid-auto-columns: 18rem;
