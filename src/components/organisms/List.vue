@@ -1,23 +1,38 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import Card from '~/components/organisms/Card.vue'
 import TextEditable from '~/components/atoms/TextEditable.vue'
 import InputForm from '~/components/molecules/InputForm.vue'
 
-const { moveCardWithinList, moveCardBetweenLists, renameList, addCardToBoard } = useBoardStore()
+const { moveCardWithinList, moveCardBetweenLists, renameList, addCardToBoard, getListById } =
+  useBoardStore()
 
-const props = defineProps({
-  list: { type: Object, required: true },
-  pos: { type: Number, required: true },
-})
+export interface Props {
+  listId: string
+  boardId: string
+  pos: number
+}
+
+// TODO: drag a card over another list - card doesn't get outline style
+
+const props = defineProps<Props>()
+
+const list = computed(() => getListById(props.boardId, props.listId))
 
 const isDragging = ref(false)
 const draggingId = ref('')
-const newCardName = ref('')
 
 const updateTitle = (newTitle: string) => {
-  renameList(props.list.boardId, props.list.id, newTitle)
+  renameList(props.boardId, props.listId, newTitle)
+}
+
+const onSubmitSuccess = (newCardId: string) => {
+  nextTick(() => {
+    let newCardEl = document.getElementById(`card-${newCardId}`)
+    console.log(newCardEl)
+    newCardEl instanceof HTMLElement && newCardEl.focus()
+  })
 }
 
 function dragOver(e: DragEvent) {
@@ -63,10 +78,10 @@ function drop(e: DragEvent) {
 
   if (!listId || !posToMoveFrom || !posToMoveTo) return
 
-  if (listId !== props.list.id) {
-    moveCardBetweenLists(props.list.boardId, listId, props.list.id, +posToMoveFrom, +posToMoveTo)
+  if (listId !== props.listId) {
+    moveCardBetweenLists(props.boardId, listId, props.listId, +posToMoveFrom, +posToMoveTo)
   } else {
-    moveCardWithinList(props.list.boardId, props.list.id, +posToMoveFrom, +posToMoveTo)
+    moveCardWithinList(props.boardId, props.listId, +posToMoveFrom, +posToMoveTo)
   }
 }
 </script>
@@ -104,14 +119,16 @@ function drop(e: DragEvent) {
     </div>
 
     <InputForm
+      inputId="newcardform"
       :toggleable="true"
+      placeholder="card title"
       labelSubmit="create"
       labelCancel="cancel"
-      v-model="newCardName"
       :data-pos="list.cardIds.length"
       @dragover="dragOver"
       @drop="drop"
-      @submit="() => addCardToBoard(list.boardId, list.id, newCardName)">
+      @submit="(newCardName) => addCardToBoard(list.boardId, list.id, newCardName)"
+      @submitSuccess="onSubmitSuccess">
       <template #toggle>
         <div i-carbon:add class="mr1"></div>
         add card

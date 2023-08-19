@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import Button from './Button.vue'
 import DialogShade from './DialogShade.vue'
 
-const emit = defineEmits(['close'])
+defineEmits(['close'])
 
-const props = defineProps({
+defineProps({
   title: { type: String, default: '', required: false },
 })
 </script>

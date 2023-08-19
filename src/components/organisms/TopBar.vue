@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 const profileOpen = ref(false)
 
@@ -16,16 +16,9 @@ const profileBtn = () => {
         aria-label="Your Profile"
         title="Your Profile"
         @click="profileBtn"
-        bg="cyan-6 opacity-30 hover:opacity-60 hover:cyan-5"
-        text="white xl"
-        p-2
-        rounded-full>
+        class="profile-btn">
         <div i-carbon:person></div>
       </button>
-
-      <div class="profile" absolute px-3>
-        <!-- <h3>your profile: {{ userStore }}</h3> -->
-      </div>
     </div>
   </div>
 </template>
@@ -34,6 +27,11 @@ const profileBtn = () => {
 .topbar {
   @apply w-full bg-cyan-8;
   height: 50px;
+}
+
+.profile-btn {
+  @apply bg-cyan-6 bg-opacity-30 text-white text-xl p-2 rounded-full;
+  @apply hover:opacity-60 hover:bg-cyan-5;
 }
 
 .topbar-inner {

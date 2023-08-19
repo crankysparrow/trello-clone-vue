@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import BoardsGrid from '~/components/organisms/BoardsGrid.vue'
 import PageWrap from '~/components/organisms/PageWrap.vue'
 </script>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue'
+import { ref } from 'vue'
+import { type List } from '~/store/boardstore'
 
 const isDragging = ref(false)
 
 export interface props {
-  lists: Record<string, string[]>
+  lists: Record<string, List>
   listOrder: string[]
 }
 defineProps<props>()

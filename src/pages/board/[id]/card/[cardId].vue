@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
@@ -6,10 +6,10 @@ import DialogShade from '~/components/atoms/DialogShade.vue'
 
 const router = useRouter()
 const route = useRoute()
-const boardId = route.params.id
-const cardId = route.params.cardId
+const boardId = route.params.id as string
+const cardId = route.params.cardId as string
 
-const { getBoardById, getCardById, describeCard } = useBoardStore()
+const { getCardById, describeCard } = useBoardStore()
 
 const card = ref(getCardById(boardId, cardId))
 // const board = ref(getBoardById(boardId))
@@ -20,10 +20,10 @@ const goToBoard = () => {
 
 const editing = ref(false)
 const describeText = ref(card.value.description ?? '')
-const describeError = ref(false)
+const describeError = ref<false | string>(false)
 
 const updateDescription = () => {
-  const err = describeCard(boardId, cardId, describeText)
+  const err = describeCard(boardId, cardId, describeText.value)
   if (err) {
     describeError.value = err
   } else {

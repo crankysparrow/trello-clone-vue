@@ -1,5 +1,5 @@
-<script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -7,7 +7,7 @@ const props = defineProps({
 
 const isEditing = ref(false)
 const editedTitle = ref(props.title)
-const input = ref(null)
+const input = ref<HTMLInputElement | null>(null)
 
 const emit = defineEmits(['updateTitle'])
 
@@ -19,7 +19,7 @@ const updateTitle = () => {
 const editMode = () => {
   isEditing.value = true
   setTimeout(() => {
-    input.value.focus()
+    input.value?.focus()
   })
 }
 

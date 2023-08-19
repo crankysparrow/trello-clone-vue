@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import TopBar from './components/organisms/TopBar.vue'
 </script>
 
@@ -10,12 +10,6 @@ import TopBar from './components/organisms/TopBar.vue'
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-
 .page-container {
   min-height: 100vh;
   display: grid;

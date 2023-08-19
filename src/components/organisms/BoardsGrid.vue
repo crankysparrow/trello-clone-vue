@@ -3,17 +3,16 @@ import ClickyBox from '~/components/atoms/ClickyBox.vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
 import InputForm from '~/components/molecules/InputForm.vue'
+// import InputNew from '~/components/molecules/InputNew.vue'
 import Dialog from '~/components/atoms/Dialog.vue'
 import { ref, nextTick } from 'vue'
 
 const showFormButton = ref<typeof ClickyBox | null>(null)
 const showNewBoardForm = ref(false)
-const newBoardName = ref('')
+// const newBoardName = ref('')
 
 const userStore = useUserStore()
 const boardStore = useBoardStore()
-
-const { newBoard, boards } = boardStore
 
 const openForm = () => {
   showNewBoardForm.value = true
@@ -35,7 +34,7 @@ const onCreateBoardSuccess = (newBoardId: string) => {
 
 <template>
   <ClickyBox
-    v-for="(board, i) in boards"
+    v-for="(board, i) in boardStore.boards"
     :key="`board-link-${i}`"
     :linkTo="`board/${board.id}`"
     class="boardgrid-box">
@@ -49,12 +48,18 @@ const onCreateBoardSuccess = (newBoardId: string) => {
   <transition name="fade">
     <Dialog title="Create Board" @close="closeForm" v-if="showNewBoardForm">
       <div class="px-2">
-        <InputForm
-          inputLabel="New Board Title"
+        <!-- <InputNew
           v-model="newBoardName"
+          inputLabel="New Board Title"
           inputId="newname"
           :focusOnMount="true"
-          @submit="() => newBoard(userStore.id, newBoardName)"
+          @submit="() => boardStore.newBoard(userStore.id, newBoardName)"
+          @cancel="closeForm" /> -->
+        <InputForm
+          inputLabel="New Board Title"
+          inputId="newname"
+          :focusOnMount="true"
+          @submit="(newBoardName) => boardStore.newBoard(userStore.id, newBoardName)"
           @submitSuccess="onCreateBoardSuccess"
           @cancel="closeForm" />
       </div>

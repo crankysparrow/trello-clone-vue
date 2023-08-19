@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import Button from '~/components/atoms/Button.vue'
 
-const props = defineProps({
+defineProps({
   labelSubmit: { type: String, default: 'submit' },
   labelCancel: { type: String, default: 'cancel' },
 })
 
 const emit = defineEmits(['submit', 'cancel'])
 
-const cancelSubmit = (e) => {
+const cancelSubmit = () => {
   emit('cancel')
 }
 </script>

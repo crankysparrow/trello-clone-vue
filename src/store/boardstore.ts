@@ -4,14 +4,14 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useStorage } from '@vueuse/core'
 
-interface List {
+export interface List {
   id: string
   title: string
   cardIds: string[]
   boardId: string
 }
 
-interface Board {
+export interface Board {
   id: string
   name: string
   creatorId: string
@@ -20,7 +20,11 @@ interface Board {
   cards: Record<string, Card>
 }
 
-interface Card {
+export type Boards = {
+  [key: string]: Board
+}
+
+export interface Card {
   id: string
   title: string
   description: string
@@ -28,7 +32,7 @@ interface Card {
 }
 
 export const useBoardStore = defineStore('boards', () => {
-  const boards = ref(useStorage<{ [key: string]: Board }>('boards', {}))
+  const boards = useStorage<Boards>('boards', {})
 
   const getBoardById = computed(() => {
     return (boardId: string) => boards.value[boardId]
@@ -41,7 +45,17 @@ export const useBoardStore = defineStore('boards', () => {
     }
   })
 
+  const getListById = computed(() => {
+    return (boardId: string, listId: string) => {
+      let board = boards.value[boardId]
+      return board.lists[listId]
+    }
+  })
+
   const newBoard = (creatorId: string, boardName: string) => {
+    if (!boardName || boardName.length < 1) {
+      return Error('title must not be blank')
+    }
     let id = uid()
     boards.value[id] = {
       id,
@@ -162,6 +176,7 @@ export const useBoardStore = defineStore('boards', () => {
 
     board.cards[newCardId] = card
     list.cardIds.push(newCardId)
+    return newCardId
   }
 
   const deleteCardFromBoard = (boardId: string, cardId: string) => {
@@ -217,6 +232,7 @@ export const useBoardStore = defineStore('boards', () => {
     newBoard,
     getBoardById,
     getCardById,
+    getListById,
     deleteListFromBoard,
     moveList,
     addListToBoard,

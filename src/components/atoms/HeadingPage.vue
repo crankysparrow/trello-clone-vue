@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <h1 class="heading-page"><slot></slot></h1>
 </template>

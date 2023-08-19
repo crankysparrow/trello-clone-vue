@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import FormBtns from './FormBtns.vue'
-import Input from '~/components/atoms/Input.vue'
 import ClickyBox from '~/components/atoms/ClickyBox.vue'
-import { onMounted, ref, defineEmits, nextTick } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 
 export interface Props {
   labelSubmit?: string
   labelCancel?: string
-  inputId?: string
+  inputId: string
   inputLabel?: string
   focusOnMount?: boolean
   modelValue?: string
   toggleable?: boolean
   errorMessage?: string | false
-  onSubmit: <T>() => void | Error | T
+  onSubmit: (text: string) => any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,7 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
   errorMessage: false,
 })
 
-const input = ref<typeof Input | null>(null)
+const input = ref<HTMLInputElement | null>(null)
+const inputText = ref('')
 const shown = ref(props.toggleable ? false : true)
 const toggleBox = ref<typeof ClickyBox | null>(null)
 const error = ref<Error | null>(null)
@@ -43,28 +43,29 @@ const show = () => {
 }
 
 const hide = () => {
-  shown.value = false
-  nextTick(() => toggleBox.value?.focus())
+  onCancel()
 }
 
 const onCancel = () => {
-  emit('cancel')
-  emit('update:modelValue', '')
   if (props.toggleable) {
+    emit('cancel')
+    inputText.value = ''
+    error.value = null
     shown.value = false
+    nextTick(() => toggleBox.value?.focus())
   }
 }
 
 const onSubmit = () => {
   if (props.onSubmit) {
-    let res = props.onSubmit()
+    let res = props.onSubmit(inputText.value)
     if (res instanceof Error) {
       error.value = res
       input.value?.focus()
       emit('submitError', res)
     } else {
       error.value = null
-      emit('update:modelValue', '')
+      inputText.value = ''
       emit('submitSuccess', res)
       if (props.toggleable) {
         shown.value = false
@@ -84,13 +85,14 @@ defineExpose({ show, hide })
         <span class="text-sm text-gray-800">show</span>
       </slot>
     </ClickyBox>
-    <form class="input-form" v-if="(toggleable && shown) || !toggleable" @keyup.escape="hide">
-      <Input
+    <form class="input-form" v-if="(toggleable && shown) || !toggleable" @keyup.escape="onCancel">
+      <input type="text" :id="inputId" v-model="inputText" ref="input" />
+      <!-- <Input
         ref="input"
         :id="inputId"
         :label="inputLabel"
-        v-model="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)" />
+        :modelValue="modelValue"
+        @update.modelValue="$emit('update:modelValue', $event)" /> -->
       <div class="text-error" v-if="error">{{ error.message }}</div>
       <FormBtns
         :labelSubmit="labelSubmit"
