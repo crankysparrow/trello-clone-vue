@@ -2,11 +2,17 @@
 import { ref } from 'vue'
 import Dialog from '~/components/Dialog.vue'
 import DialogShade from '~/components/DialogShade.vue'
-// import TextEditable from '~/components/TextEditable.vue'
+import { useUserStore } from '~/store/userstore'
+import TextEditable from '~/components/TextEditable.vue'
+
 const profileOpen = ref(false)
-// import { useUserStore } from '~/store/user'
 
 // const { name, id, setName } = useUserStore()
+const user = useUserStore()
+
+const changeUserName = (newName: string) => {
+  user.setName(newName)
+}
 
 const profileBtn = () => {
   profileOpen.value = !profileOpen.value
@@ -28,11 +34,21 @@ const profileBtn = () => {
     </div>
   </div>
   <DialogShade v-if="profileOpen">
-    <Dialog @close="profileOpen = false" title="Your Profile">
-      <div class="flex flex-col items-center">
-        <!-- <div class="text-4">Your Name</div> -->
-        <!-- <TextEditable :text="" -->
+    <Dialog @close="profileOpen = false">
+      <template #title>
+        <h2>Your Profile</h2>
+      </template>
+      <div class="p4">
+        <div class="text-3.5">Click your name to edit it</div>
+        <strong>Name: </strong>
+        <TextEditable
+          class="inline-block"
+          :text="user.name"
+          @updateText="changeUserName"
+          placeholder="Your Name" />
       </div>
+      <!-- <div class="text-4">Your Name</div> -->
+      <!-- <TextEditable :text="" -->
     </Dialog>
   </DialogShade>
 </template>

@@ -22,9 +22,11 @@ defineProps({
       label="Close Dialog"
       :showText="false"
       size="sm" />
-    <slot name="title">
-      <h2 v-if="title" class="dialog-title">{{ title }}</h2>
-    </slot>
+    <div class="dialog-title">
+      <slot name="title">
+        <h2 v-if="title">{{ title }}</h2>
+      </slot>
+    </div>
     <div class="dialog-content">
       <slot></slot>
     </div>
@@ -47,7 +49,7 @@ defineProps({
 }
 
 .dialog-title {
-  @apply text-xl mb-0 p4 border-b-1 border-slate-900 bg-slate-9 bg-opacity-90 text-gray-1;
+  @apply mb-0 p4 border-b-1 border-slate-900 bg-slate-9 bg-opacity-90 text-gray-1;
 }
 
 .dialog-content {

@@ -74,7 +74,7 @@ const onSubmit = () => {
   }
 }
 
-const emit = defineEmits(['submitSuccess', 'submitError', 'update:modelValue', 'cancel'])
+const emit = defineEmits(['submitSuccess', 'submitError', 'cancel'])
 defineExpose({ show, hide })
 </script>
 
@@ -87,12 +87,6 @@ defineExpose({ show, hide })
     </ClickyBox>
     <form class="input-form" v-if="(toggleable && shown) || !toggleable" @keyup.escape="onCancel">
       <input type="text" :id="inputId" v-model="inputText" ref="input" class="input-form-input" />
-      <!-- <Input
-        ref="input"
-        :id="inputId"
-        :label="inputLabel"
-        :modelValue="modelValue"
-        @update.modelValue="$emit('update:modelValue', $event)" /> -->
       <div class="text-error" v-if="error">{{ error.message }}</div>
       <FormBtns
         :labelSubmit="labelSubmit"
@@ -107,6 +101,7 @@ defineExpose({ show, hide })
 .input-form-wrap {
   @apply bg-slate-3 bg-opacity-60;
 }
+
 .input-form {
   @apply py-4 px-2;
 }

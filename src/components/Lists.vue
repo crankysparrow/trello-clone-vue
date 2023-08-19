@@ -10,11 +10,6 @@ export interface props {
 }
 defineProps<props>()
 
-// const props = defineProps({
-//   lists: { type: Object, required: true },
-//   listOrder: { type: Array, required: true },
-// })
-
 const emit = defineEmits(['moveList'])
 
 function dragOver(e: DragEvent) {
@@ -96,11 +91,6 @@ function drop(e: DragEvent) {
 </template>
 
 <style scoped>
-.lists {
-  @apply pt2 pb6 max-w-full overflow-x-auto grid grid-flow-col;
-  grid-auto-columns: 18rem;
-}
-
 .list-outer {
   @apply relative mx-a w-69;
 }

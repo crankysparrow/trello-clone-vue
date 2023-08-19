@@ -245,16 +245,16 @@ export const useBoardStore = defineStore('boards', () => {
   }
 
   const describeCard = (boardId: string, cardId: string, description: string) => {
-    if (!description || description.length < 1) {
-      return 'enter some text for description'
-    }
+    // if (!description || description.length < 1) {
+    //   return 'enter some text for description'
+    // }
 
     let board = boards.value[boardId]
     if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
     let card = board.cards[cardId]
     if (!card) return console.warn(`card doesn't exist! searched for ID: ${cardId}`)
 
-    card.description = description
+    card.description = description ?? ''
   }
 
   return {

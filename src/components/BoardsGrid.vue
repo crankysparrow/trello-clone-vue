@@ -3,14 +3,12 @@ import ClickyBox from '~/components/ClickyBox.vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
 import InputForm from '~/components/InputForm.vue'
-// import InputNew from '~/components/molecules/InputNew.vue'
 import Dialog from '~/components/Dialog.vue'
 import DialogShade from '~/components/DialogShade.vue'
 import { ref, nextTick } from 'vue'
 
 const showFormButton = ref<typeof ClickyBox | null>(null)
 const showNewBoardForm = ref(false)
-// const newBoardName = ref('')
 
 const userStore = useUserStore()
 const boardStore = useBoardStore()

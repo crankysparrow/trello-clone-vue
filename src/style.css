@@ -21,6 +21,10 @@ h1 {
   @apply text-2xl font-500 mb4;
 }
 
+h2 {
+  @apply text-xl;
+}
+
 input[type='submit'],
 button {
   @apply btn;

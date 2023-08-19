@@ -13,6 +13,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const isEditing = ref(false)
+const input = ref<HTMLInputElement | null>(null)
+const cancelButton = ref<HTMLButtonElement | null>(null)
+
 const editedText = ref(props.text)
 const editedTextHtml = computed(() => {
   if (props.multiline) {
@@ -20,28 +23,23 @@ const editedTextHtml = computed(() => {
   }
   return editedText.value
 })
-const input = ref<HTMLInputElement | null>(null)
-const cancelButton = ref<HTMLButtonElement | null>(null)
 
 const emit = defineEmits(['updateText'])
 
 const doUpdateText = () => {
   let text = editedText.value
-  // if (props.multiline) {
-  //   text = text.replace(/\n/g, '<br>')
-  // }
   emit('updateText', text)
   isEditing.value = false
 }
 
-const editMode = () => {
+const startEditing = () => {
   isEditing.value = true
   nextTick(() => {
     input.value?.focus()
   })
 }
 
-const undoEdit = () => {
+const cancelEditing = () => {
   editedText.value = props.text
   isEditing.value = false
 }
@@ -54,12 +52,12 @@ const onBlur = (e: FocusEvent) => {
 </script>
 
 <template>
-  <div :class="`editable${multiline ? ' multiline' : ''}`">
-    <div class="editable-text" v-if="!isEditing" @click="editMode">
+  <div class="editable-text-wrap">
+    <div class="editable-text" v-if="!isEditing" @click="startEditing">
       <span v-if="text.length > 0" v-html="editedTextHtml" />
       <span v-else-if="placeholder" class="placeholder">{{ placeholder }}</span>
     </div>
-    <div v-else @keyup.esc.stop="undoEdit">
+    <div v-else @keyup.esc.stop="cancelEditing">
       <div v-if="multiline" class="textarea-wrap grid">
         <span
           class="edited-sizer col-start-1 row-start-1 invisible opacity-0"
@@ -86,7 +84,7 @@ const onBlur = (e: FocusEvent) => {
         btnStyle="flat-dark"
         size="xs"
         class="editable-cancel"
-        @click="undoEdit"
+        @click="cancelEditing"
         v-if="editedText !== text"
         icon="close"
         label="cancel edit title"
@@ -96,7 +94,7 @@ const onBlur = (e: FocusEvent) => {
 </template>
 
 <style scoped>
-.editable {
+.editable-text-wrap {
   @apply min-h-10 relative;
 }
 

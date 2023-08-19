@@ -105,6 +105,7 @@ function drop(e: DragEvent) {
         @updateText="updateTitle"
         @dragover="dragOver"
         @drop="drop"
+        class="list-title-editable"
         :data-pos="0" />
       <Button
         icon="delete"
@@ -175,5 +176,9 @@ function drop(e: DragEvent) {
 
 .list-title {
   @apply text-lg px2 flex justify-between items-center;
+}
+
+.list-title-editable {
+  @apply flex-1;
 }
 </style>
