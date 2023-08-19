@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 
 const { getCardById } = useBoardStore()

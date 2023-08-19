@@ -15,10 +15,17 @@ const cancelSubmit = () => {
 
 <template>
   <div class="form-btns">
-    <Button type="button" @click="cancelSubmit" btn-style="subdued" class="mr2">
-      {{ labelCancel }}
-    </Button>
-    <Button @click.prevent="$emit('submit')" type="submit">{{ labelSubmit }}</Button>
+    <Button
+      type="button"
+      @click="cancelSubmit"
+      btnStyle="flat-dark"
+      class="mr2"
+      :label="labelCancel" />
+    <Button
+      @click.prevent="$emit('submit')"
+      btnStyle="primary"
+      :label="labelSubmit"
+      type="submit" />
   </div>
 </template>
 

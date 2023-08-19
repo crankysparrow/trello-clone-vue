@@ -79,14 +79,14 @@ defineExpose({ show, hide })
 </script>
 
 <template>
-  <div>
+  <div class="input-form-wrap">
     <ClickyBox v-if="toggleable && !shown" @click="show" size="sm" color="light" ref="toggleBox">
       <slot name="toggle">
         <span class="text-sm text-gray-800">show</span>
       </slot>
     </ClickyBox>
     <form class="input-form" v-if="(toggleable && shown) || !toggleable" @keyup.escape="onCancel">
-      <input type="text" :id="inputId" v-model="inputText" ref="input" />
+      <input type="text" :id="inputId" v-model="inputText" ref="input" class="input-form-input" />
       <!-- <Input
         ref="input"
         :id="inputId"
@@ -104,7 +104,14 @@ defineExpose({ show, hide })
 </template>
 
 <style scoped>
+.input-form-wrap {
+  @apply bg-slate-3 bg-opacity-60;
+}
 .input-form {
   @apply py-4 px-2;
+}
+
+.input-form-input {
+  @apply w-full text-xs mb-2;
 }
 </style>

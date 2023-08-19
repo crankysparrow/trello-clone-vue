@@ -5,6 +5,7 @@ import { useUserStore } from '~/store/userstore'
 import InputForm from '~/components/molecules/InputForm.vue'
 // import InputNew from '~/components/molecules/InputNew.vue'
 import Dialog from '~/components/atoms/Dialog.vue'
+import DialogShade from '~/components/atoms/DialogShade.vue'
 import { ref, nextTick } from 'vue'
 
 const showFormButton = ref<typeof ClickyBox | null>(null)
@@ -46,15 +47,8 @@ const onCreateBoardSuccess = (newBoardId: string) => {
   </ClickyBox>
 
   <transition name="fade">
-    <Dialog title="Create Board" @close="closeForm" v-if="showNewBoardForm">
-      <div class="px-2">
-        <!-- <InputNew
-          v-model="newBoardName"
-          inputLabel="New Board Title"
-          inputId="newname"
-          :focusOnMount="true"
-          @submit="() => boardStore.newBoard(userStore.id, newBoardName)"
-          @cancel="closeForm" /> -->
+    <DialogShade v-if="showNewBoardForm">
+      <Dialog title="Create Board" @close="closeForm">
         <InputForm
           inputLabel="New Board Title"
           inputId="newname"
@@ -62,8 +56,8 @@ const onCreateBoardSuccess = (newBoardId: string) => {
           @submit="(newBoardName) => boardStore.newBoard(userStore.id, newBoardName)"
           @submitSuccess="onCreateBoardSuccess"
           @cancel="closeForm" />
-      </div>
-    </Dialog>
+      </Dialog>
+    </DialogShade>
   </transition>
 </template>
 

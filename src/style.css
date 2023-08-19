@@ -28,7 +28,7 @@ button {
 
 input:not([type='submit']):not([type='file']),
 textarea {
-  @apply bg-slate-1 border-slate-4 border-1 px-2 py-2 text-4 rounded-sm transition-all;
+  @apply bg-slate-1 border-gray-3 border-1 px-2 py-2 text-4 rounded-sm transition-all;
 }
 
 input:not([type='submit']):not([type='file']):focus,

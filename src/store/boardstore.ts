@@ -1,7 +1,7 @@
 // import { v4 as uid } from 'uuid'
 import { uid } from 'uid'
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
 
 export interface List {
@@ -89,11 +89,37 @@ export const useBoardStore = defineStore('boards', () => {
     board.listOrder.push(newListId)
   }
 
-  const deleteListFromBoard = (boardId: string, listPos: number) => {
+  const deleteBoard = (boardId: string) => {
     let board = boards.value[boardId]
-    let listId = board.listOrder[listPos]
+    if (!board) return console.warn(`board doesn't exist! searched for ID: ${boardId}`)
+    delete boards.value[boardId]
+  }
+
+  const deleteListFromBoard = (boardId: string, listId: string) => {
+    let board = boards.value[boardId]
+
+    let list = board.lists[listId]
+    if (!list) return console.warn(`list doesn't exist! searched for ID: ${listId}`)
+    let listPos = board.listOrder.indexOf(listId)
     board.listOrder.splice(listPos, 1)
-    delete board.lists[listId]
+    let cardsToDelete = [...list.cardIds]
+    cardsToDelete.forEach((cardId) => {
+      delete board.cards[cardId]
+    })
+    // delete board.lists[listId] <- this doesn't work
+    let boardCopy = { ...board }
+    delete boardCopy.lists[listId]
+    boards.value[boardId] = boardCopy
+  }
+
+  const deleteCardFromBoard = (boardId: string, cardId: string) => {
+    let board = boards.value[boardId]
+    let card = board.cards[cardId]
+    let currentListId = card.currentList
+    let currentList = board.lists[currentListId]
+
+    currentList.cardIds = currentList.cardIds.filter((id) => id !== cardId)
+    delete board.cards[cardId]
   }
 
   const moveList = (boardId: string, posToMoveFrom: number, posToMoveTo: number) => {
@@ -179,16 +205,6 @@ export const useBoardStore = defineStore('boards', () => {
     return newCardId
   }
 
-  const deleteCardFromBoard = (boardId: string, cardId: string) => {
-    let board = boards.value[boardId]
-    let card = board.cards[cardId]
-    let currentListId = card.currentList
-    let currentList = board.lists[currentListId]
-
-    currentList.cardIds = currentList.cardIds.filter((id) => id !== cardId)
-    delete board.cards[cardId]
-  }
-
   const renameList = (boardId: string, listId: string, newTitle: string) => {
     if (!newTitle || newTitle.length < 1) {
       return 'title must not be blank'
@@ -199,6 +215,20 @@ export const useBoardStore = defineStore('boards', () => {
     if (!list) return console.warn(`list doesn't exist! searched for ID: ${listId}`)
 
     list.title = newTitle
+  }
+
+  const renameBoard = (boardId: string, newTitle: string) => {
+    if (!newTitle || newTitle.length < 1) {
+      return Error('title must not be blank')
+    }
+
+    let board = boards.value[boardId]
+    if (!board) {
+      console.warn(`board doesn't exist! searched for ID: ${boardId}`)
+      return Error('board does not exist')
+    }
+
+    board.name = newTitle
   }
 
   const renameCard = (boardId: string, cardId: string, newTitle: string) => {
@@ -234,14 +264,16 @@ export const useBoardStore = defineStore('boards', () => {
     getCardById,
     getListById,
     deleteListFromBoard,
+    deleteCardFromBoard,
+    deleteBoard,
     moveList,
     addListToBoard,
     addCardToBoard,
     moveCardWithinList,
     renameList,
-    moveCardBetweenLists,
-    deleteCardFromBoard,
     renameCard,
+    renameBoard,
+    moveCardBetweenLists,
     describeCard,
   }
 })

@@ -4,9 +4,16 @@ import { useBoardStore } from '~/store/boardstore'
 import Card from '~/components/organisms/Card.vue'
 import TextEditable from '~/components/atoms/TextEditable.vue'
 import InputForm from '~/components/molecules/InputForm.vue'
+import Button from '~/components/atoms/Button.vue'
 
-const { moveCardWithinList, moveCardBetweenLists, renameList, addCardToBoard, getListById } =
-  useBoardStore()
+const {
+  deleteListFromBoard,
+  moveCardWithinList,
+  moveCardBetweenLists,
+  renameList,
+  addCardToBoard,
+  getListById,
+} = useBoardStore()
 
 export interface Props {
   listId: string
@@ -25,6 +32,10 @@ const draggingId = ref('')
 
 const updateTitle = (newTitle: string) => {
   renameList(props.boardId, props.listId, newTitle)
+}
+
+const deleteList = () => {
+  deleteListFromBoard(props.boardId, props.listId)
 }
 
 const onSubmitSuccess = (newCardId: string) => {
@@ -88,13 +99,21 @@ function drop(e: DragEvent) {
 
 <template>
   <div class="list" v-if="list">
-    <TextEditable
-      class="list-title px2"
-      :title="list.title"
-      @updateTitle="updateTitle"
-      @dragover="dragOver"
-      @drop="drop"
-      :data-pos="0" />
+    <div class="list-title">
+      <TextEditable
+        :text="list.title"
+        @updateText="updateTitle"
+        @dragover="dragOver"
+        @drop="drop"
+        :data-pos="0" />
+      <Button
+        icon="delete"
+        @click="deleteList"
+        btnStyle="flat-dark"
+        size="xs"
+        label="Delete List"
+        :showText="false" />
+    </div>
 
     <div class="card-items">
       <div
@@ -155,6 +174,6 @@ function drop(e: DragEvent) {
 }
 
 .list-title {
-  @apply text-lg;
+  @apply text-lg px2 flex justify-between items-center;
 }
 </style>

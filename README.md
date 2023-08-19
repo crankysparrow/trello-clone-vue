@@ -11,22 +11,21 @@ Some bugs, inconsistencies & incompletenesses but it's functional!
   - [x] add store
   - [x] basic styles
 - store
-  - [ ] can delete board
+  - [x] can delete board
   - [x] can delete card
-  - [ ] can delete list
-    - [ ] and all cards within it
+  - [x] can delete list
+    - [x] and all cards within it
   - [x] can change user name
 - main homepage
   - [ ] user
     - [x] generate unique ID for user
     - [ ] can give themselves a name
-  - [ ] add boards
+  - [x] add boards
     - [x] adds new object with title + unique ID
-    - [ ] can't add if you don't name the board
-  - [ ] can delete board
+    - [x] can't add if you don't name the board
 - board page
   - [x] display board title
-  - [ ] can rename board
+  - [x] can rename board
   - [ ] display board creator
   - [x] board screen shows associated lists
   - [x] add list
@@ -34,28 +33,30 @@ Some bugs, inconsistencies & incompletenesses but it's functional!
     - [x] button is functional
   - [x] list options
     - [x] rename list
-    - [ ] delete list
-      - [ ] warn will delete all cards in the list
   - [x] drag lists to reorder
   - [x] "add card" and "add list" cancel buttons
+  - [x] can delete list
+    - [ ] warn will delete all cards in the list
+  - [x] can delete board
+    - [ ] warn will delete all lists/cards in it
 - cards
   - [x] can add a card to a list
   - [x] can't add card without specifying a title
   - [x] click card for modal/description
   - [x] can add description to card
   - [ ] can edit title
-  - [ ] nice UI interface editing description
+  - [x] nice UI interface editing description
   - [x] can reorder cards within list
   - [x] can move card to another list
   - [ ] can delete card
-  - [ ] card view
+  - [x] card view
 - Keyboard Accessibility
   - [x] add board form - focus moves to input
-  - [ ] add card form - focus moves to input
-  - [ ] add card form - escape to close
-  - [ ] add list form - focus moves to input
-  - [ ] add board - focus moves to new board
-  - [ ] add card - focus moves to new card
+  - [x] add card form - focus moves to input
+  - [x] add card form - escape to close
+  - [x] add list form - focus moves to input
+  - [x] add board - focus moves to new board
+  - [x] add card - focus moves to new card
   - [ ] add list - focus moves to list (?)
   - [ ] can move lists with keyboard
   - [ ] can move cards with keyboard

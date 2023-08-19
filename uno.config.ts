@@ -9,7 +9,8 @@ import {
 export default defineConfig({
   shortcuts: [
     {
-      'text-error': 'text-red text-xs',
+      'text-error': 'text-red-5 text-xs',
+      btn: 'inline-flex align-center',
       'btn-reset': 'text-inherit p-0 bg-transparent hover:bg-transparent focus:bg-transparent',
       // btn: 'text-slate-1 bg-cyan-7 hover:bg-cyan-6 focus:bg-cyan-6 px-3 py-2 lh-none font-500 text-sm rounded-none transition-all cursor-pointer',
       // btn: 'bg-cyan-7 text-slate-1 text-sm px-3 py-2 lh-none font-500 rounded-none transition-all cursor-pointer hover:bg-cyan-6',

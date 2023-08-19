@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Dialog from '~/components/atoms/Dialog.vue'
+import DialogShade from '~/components/atoms/DialogShade.vue'
+import TextEditable from '~/components/atoms/TextEditable.vue'
 const profileOpen = ref(false)
+import { useUserStore } from '~/store/user'
+
+const { name, id, setName } = useUserStore()
 
 const profileBtn = () => {
   profileOpen.value = !profileOpen.value
@@ -21,6 +27,14 @@ const profileBtn = () => {
       </button>
     </div>
   </div>
+  <DialogShade v-if="profileOpen">
+    <Dialog @close="profileOpen = false" title="Your Profile">
+      <div class="flex flex-col items-center">
+        <!-- <div class="text-4">Your Name</div> -->
+        <!-- <TextEditable :text="" -->
+      </div>
+    </Dialog>
+  </DialogShade>
 </template>
 
 <style scoped>
