@@ -9,9 +9,11 @@ defineProps({
 
 <template>
   <div class="page-wrap">
-    <HeadingPage>
-      <slot name="title">{{ title }}</slot>
-    </HeadingPage>
+    <div class="page-wrap-title">
+      <slot name="title">
+        <HeadingPage>{{ title }}</HeadingPage>
+      </slot>
+    </div>
 
     <div :class="`content-wrap ${rows ? 'rows' : 'columns'}`">
       <slot />
@@ -23,6 +25,10 @@ defineProps({
 .page-wrap {
   @apply relative w-full grid h-full;
   grid-template-rows: auto 1fr;
+}
+
+.page-wrap-title {
+  @apply my-4 container mx-auto w-full;
 }
 .content-wrap.columns {
   @apply grid pb6 pt1 px-4 overflow-x-auto grid-flow-col max-w-full h-full;

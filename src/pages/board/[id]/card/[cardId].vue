@@ -11,7 +11,7 @@ const route = useRoute()
 const boardId = route.params.id as string
 const cardId = route.params.cardId as string
 
-const { getCardById, describeCard } = useBoardStore()
+const { getCardById, describeCard, renameCard } = useBoardStore()
 
 const card = computed(() => getCardById(boardId, cardId))
 
@@ -22,11 +22,24 @@ const goToBoard = () => {
 const updateDescription = (newDescription: string) => {
   describeCard(boardId, cardId, newDescription)
 }
+
+const updateTitle = (newTitle: string) => {
+  renameCard(boardId, cardId, newTitle)
+}
 </script>
 
 <template>
   <DialogShade>
     <Dialog class="card" @close="goToBoard" :title="card.title">
+      <template #title>
+        <TextEditable
+          :text="card.title"
+          @updateText="updateTitle"
+          inputId="card-title"
+          placeholder="card title"
+          color="dark"
+          class="mt-3 mr-4" />
+      </template>
       <div class="card__content">
         <TextEditable
           :text="card.description"
@@ -34,7 +47,7 @@ const updateDescription = (newDescription: string) => {
           inputId="card-desc"
           :multiline="true"
           placeholder="card description"
-          class="my2" />
+          class="my2 min-h-30" />
       </div>
     </Dialog>
   </DialogShade>

@@ -7,7 +7,6 @@ import TextEditable from '~/components/TextEditable.vue'
 
 const profileOpen = ref(false)
 
-// const { name, id, setName } = useUserStore()
 const user = useUserStore()
 
 const changeUserName = (newName: string) => {
@@ -47,8 +46,6 @@ const profileBtn = () => {
           @updateText="changeUserName"
           placeholder="Your Name" />
       </div>
-      <!-- <div class="text-4">Your Name</div> -->
-      <!-- <TextEditable :text="" -->
     </Dialog>
   </DialogShade>
 </template>

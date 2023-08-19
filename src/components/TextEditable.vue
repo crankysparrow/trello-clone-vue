@@ -6,10 +6,12 @@ export interface Props {
   text: string
   multiline?: boolean
   placeholder?: string
+  color?: 'light' | 'dark'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   multiline: false,
+  color: 'light',
 })
 
 const isEditing = ref(false)
@@ -52,7 +54,7 @@ const onBlur = (e: FocusEvent) => {
 </script>
 
 <template>
-  <div class="editable-text-wrap">
+  <div :class="`editable-text-wrap ${color} ${multiline ? 'multi-line' : 'single-line'}`">
     <div class="editable-text" v-if="!isEditing" @click="startEditing">
       <span v-if="text.length > 0" v-html="editedTextHtml" />
       <span v-else-if="placeholder" class="placeholder">{{ placeholder }}</span>
@@ -95,7 +97,7 @@ const onBlur = (e: FocusEvent) => {
 
 <style scoped>
 .editable-text-wrap {
-  @apply min-h-10 relative;
+  @apply relative;
 }
 
 .editable-text,
@@ -103,6 +105,11 @@ const onBlur = (e: FocusEvent) => {
 .edited-sizer {
   @apply lh-snug! w-full text-size-inherit! relative;
   @apply py2 pr6 px1 border-1 border-solid border-transparent;
+}
+
+.multi-line .editable-text,
+.multi-line .editable-edit {
+  @apply min-h-30;
 }
 
 .editable-edit {

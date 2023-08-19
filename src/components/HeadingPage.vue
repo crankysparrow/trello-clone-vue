@@ -4,6 +4,6 @@
 
 <style scoped>
 h1 {
-  @apply text-2xl font-500 my-4 container mx-auto w-full;
+  @apply text-2xl font-500;
 }
 </style>

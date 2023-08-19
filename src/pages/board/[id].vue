@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
+import { useUserStore } from '~/store/userstore'
 import { useRoute, useRouter } from 'vue-router'
 import Lists from '~/components/Lists.vue'
 import List from '~/components/List.vue'
@@ -14,11 +15,10 @@ const route = useRoute()
 const router = useRouter()
 const id = route.params.id as string
 const boardStore = useBoardStore()
-// const test = ref(false)
-// const testDeleteListId = ref('')
-// const { getBoardById, moveList, addListToBoard } = useBoardStore()
+const userStore = useUserStore()
 
 const board = computed(() => boardStore.getBoardById(id))
+const userName = computed(() => userStore.name)
 
 const updateBoardTitle = (newTitle: string) => {
   if (newTitle.length > 0) boardStore.renameBoard(id, newTitle)
@@ -35,17 +35,18 @@ const deleteBoard = () => {
   <PageWrap :title="board.name" v-if="board">
     <template #title>
       <div class="board-title-wrap">
-        <TextEditable
-          :text="board.name"
-          @updateText="updateBoardTitle"
-          inputId="board-name"
-          class="text-2xl font-bold" />
+        <div>
+          <h2>
+            <TextEditable
+              :text="board.name"
+              @updateText="updateBoardTitle"
+              inputId="board-name"
+              class="font-500" />
+          </h2>
+          <div v-if="userName" class="text-sm ml-2 mt-1">created by {{ userName }}</div>
+        </div>
 
         <Button @click="deleteBoard" btnStyle="error" icon="delete" label="delete board" />
-        <!-- <button @click="deleteBoard" class="text-error">
-          <div i-carbon:trash-can></div>
-          delete board
-        </button> -->
       </div>
     </template>
     <Lists

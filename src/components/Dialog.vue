@@ -45,7 +45,7 @@ defineProps({
 }
 
 .close {
-  @apply absolute top-2 right-2 text-white;
+  @apply absolute top-1 right-0 text-white;
 }
 
 .dialog-title {

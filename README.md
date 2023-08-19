@@ -17,9 +17,9 @@ Some bugs, inconsistencies & incompletenesses but it's functional!
     - [x] and all cards within it
   - [x] can change user name
 - main homepage
-  - [ ] user
+  - [x] user
     - [x] generate unique ID for user
-    - [ ] can give themselves a name
+    - [ x can give themselves a name
   - [x] add boards
     - [x] adds new object with title + unique ID
     - [x] can't add if you don't name the board
