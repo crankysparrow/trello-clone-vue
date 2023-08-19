@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import Dialog from '~/components/atoms/Dialog.vue'
 import DialogShade from '~/components/atoms/DialogShade.vue'
-import TextEditable from '~/components/atoms/TextEditable.vue'
+// import TextEditable from '~/components/atoms/TextEditable.vue'
 const profileOpen = ref(false)
-import { useUserStore } from '~/store/user'
+// import { useUserStore } from '~/store/user'
 
-const { name, id, setName } = useUserStore()
+// const { name, id, setName } = useUserStore()
 
 const profileBtn = () => {
   profileOpen.value = !profileOpen.value
