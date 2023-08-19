@@ -2,9 +2,9 @@
 import { ref, computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
-import DialogShade from '~/components/atoms/DialogShade.vue'
-import Dialog from '~/components/atoms/Dialog.vue'
-import TextEditable from '~/components/atoms/TextEditable.vue'
+import DialogShade from '~/components/DialogShade.vue'
+import Dialog from '~/components/Dialog.vue'
+import TextEditable from '~/components/TextEditable.vue'
 
 const router = useRouter()
 const route = useRoute()

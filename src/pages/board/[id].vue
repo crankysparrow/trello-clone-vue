@@ -2,12 +2,12 @@
 import { computed, nextTick } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
-import Lists from '~/components/organisms/Lists.vue'
-import List from '~/components/organisms/List.vue'
-import PageWrap from '~/components/organisms/PageWrap.vue'
-import InputForm from '~/components/molecules/InputForm.vue'
-import TextEditable from '~/components/atoms/TextEditable.vue'
-import Button from '~/components/atoms/Button.vue'
+import Lists from '~/components/Lists.vue'
+import List from '~/components/List.vue'
+import PageWrap from '~/components/PageWrap.vue'
+import InputForm from '~/components/InputForm.vue'
+import TextEditable from '~/components/TextEditable.vue'
+import Button from '~/components/Button.vue'
 import Debug from '~/components/Debug.vue'
 
 const route = useRoute()

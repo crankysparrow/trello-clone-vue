@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BoardsGrid from '~/components/organisms/BoardsGrid.vue'
-import PageWrap from '~/components/organisms/PageWrap.vue'
+import BoardsGrid from '~/components/BoardsGrid.vue'
+import PageWrap from '~/components/PageWrap.vue'
 </script>
 
 <template>

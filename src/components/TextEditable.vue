@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
-import Button from '~/components/atoms/Button.vue'
+import Button from '~/components/Button.vue'
 
 export interface Props {
   text: string

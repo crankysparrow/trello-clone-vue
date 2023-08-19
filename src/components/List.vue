@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, nextTick, computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import Card from '~/components/organisms/Card.vue'
-import TextEditable from '~/components/atoms/TextEditable.vue'
-import InputForm from '~/components/molecules/InputForm.vue'
-import Button from '~/components/atoms/Button.vue'
+import Card from '~/components/Card.vue'
+import TextEditable from '~/components/TextEditable.vue'
+import InputForm from '~/components/InputForm.vue'
+import Button from '~/components/Button.vue'
 
 const {
   deleteListFromBoard,

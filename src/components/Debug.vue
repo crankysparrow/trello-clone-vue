@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import Dialog from '~/components/atoms/Dialog.vue'
+import Dialog from '~/components/Dialog.vue'
 
 const props = defineProps({
   boardId: { type: String, required: true },

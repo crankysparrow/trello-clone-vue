@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Dialog from '~/components/atoms/Dialog.vue'
-import DialogShade from '~/components/atoms/DialogShade.vue'
-// import TextEditable from '~/components/atoms/TextEditable.vue'
+import Dialog from '~/components/Dialog.vue'
+import DialogShade from '~/components/DialogShade.vue'
+// import TextEditable from '~/components/TextEditable.vue'
 const profileOpen = ref(false)
 // import { useUserStore } from '~/store/user'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeadingPage from '~/components/atoms/HeadingPage.vue'
+import HeadingPage from '~/components/HeadingPage.vue'
 
 defineProps({
   title: { type: String, required: true },

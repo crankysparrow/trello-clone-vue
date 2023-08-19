@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import FormBtns from './FormBtns.vue'
-import ClickyBox from '~/components/atoms/ClickyBox.vue'
+import FormBtns from '~/components/FormBtns.vue'
+import ClickyBox from '~/components/ClickyBox.vue'
 import { onMounted, ref, nextTick } from 'vue'
 
 export interface Props {

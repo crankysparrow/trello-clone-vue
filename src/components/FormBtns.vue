@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from '~/components/atoms/Button.vue'
+import Button from '~/components/Button.vue'
 
 defineProps({
   labelSubmit: { type: String, default: 'submit' },
