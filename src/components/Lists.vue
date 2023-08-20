@@ -10,7 +10,8 @@ export interface props {
 }
 defineProps<props>()
 
-const emit = defineEmits(['moveList'])
+const emit = defineEmits(['moveList', 'dragListStart', 'dragListEnd'])
+defineExpose({ isDragging })
 
 function dragOver(e: DragEvent) {
   if (isDragging.value) {
@@ -30,10 +31,12 @@ function dragStart(e: DragEvent) {
   isDragging.value = true
 
   e.dataTransfer?.setData('text/plain', target.id)
+  emit('dragListStart')
 }
 
 function dragEnd() {
   isDragging.value = false
+  emit('dragListEnd')
 }
 
 function dragLeave(e: DragEvent) {
@@ -46,6 +49,7 @@ function dragLeave(e: DragEvent) {
 }
 
 function drop(e: DragEvent) {
+  console.log('list drop', e)
   if (!isDragging.value) return
 
   let target = e.currentTarget
@@ -55,7 +59,7 @@ function drop(e: DragEvent) {
   if (!id) return
 
   const el = document.getElementById(id)
-  if (!el || !(el instanceof HTMLElement)) return
+  if (!el || !el.classList.contains('list-inner')) return
 
   el.parentElement?.classList.remove('dragging-list')
   target.classList.remove('drag-over')

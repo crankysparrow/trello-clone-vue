@@ -11,7 +11,6 @@ import './style.css'
 import home from './pages/index.vue'
 import boardPage from './pages/board/[id].vue'
 import cardPage from './pages/board/[id]/card/[cardId].vue'
-import testPage from './pages/testpage.vue'
 
 const routes = [
   { path: '/', component: home },
@@ -19,10 +18,6 @@ const routes = [
     path: '/board/:id',
     component: boardPage,
     children: [{ path: '/board/:id/card/:cardId', name: 'card', component: cardPage, props: true }],
-  },
-  {
-    path: '/test',
-    component: testPage,
   },
 ]
 

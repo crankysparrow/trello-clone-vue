@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 export interface Props {
   btnStyle?: 'primary' | 'subdued' | 'error' | 'flat-light' | 'flat-dark' | 'none'
@@ -7,6 +7,8 @@ export interface Props {
   icon?: 'close' | 'delete'
   showText?: boolean
   label?: string
+  linkTo?: string
+  externalLink?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -15,12 +17,38 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 })
 
+const el = ref<HTMLButtonElement | null>(null)
+
+const focus = () => {
+  el.value?.focus()
+}
+
+defineExpose({ focus })
+
 const className = computed(() => `btn btn-style-${props.btnStyle} btn-size-${props.size}`)
 const ariaLabel = computed(() => props.label ?? undefined)
 </script>
 
 <template>
-  <button :class="className" :aria-label="ariaLabel ?? ''">
+  <a v-if="linkTo && externalLink" :href="linkTo" target="_blank" ref="el" :class="className">
+    <slot>
+      <div v-if="icon && icon === 'close'" class="i-carbon:close" />
+      <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />
+
+      <div v-if="label && showText && icon" class="btn-spacer"></div>
+      <div v-if="label && showText" class="btn-label">{{ label }}</div>
+    </slot>
+  </a>
+  <router-link v-else-if="linkTo" :to="linkTo" :class="className">
+    <slot>
+      <div v-if="icon && icon === 'close'" class="i-carbon:close" />
+      <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />
+
+      <div v-if="label && showText && icon" class="btn-spacer"></div>
+      <div v-if="label && showText" class="btn-label">{{ label }}</div>
+    </slot>
+  </router-link>
+  <button v-else :class="className" :aria-label="ariaLabel ?? ''" ref="el">
     <slot>
       <div v-if="icon && icon === 'close'" class="i-carbon:close" />
       <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />

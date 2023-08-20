@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
 import { useRoute, useRouter } from 'vue-router'
@@ -8,7 +8,7 @@ import List from '~/components/List.vue'
 import PageWrap from '~/components/PageWrap.vue'
 import InputForm from '~/components/InputForm.vue'
 import TextEditable from '~/components/TextEditable.vue'
-import Button from '~/components/Button.vue'
+import DeleteWithConfirm from '~/components/DeleteWithConfirm.vue'
 import Debug from '~/components/Debug.vue'
 
 const route = useRoute()
@@ -16,6 +16,9 @@ const router = useRouter()
 const id = route.params.id as string
 const boardStore = useBoardStore()
 const userStore = useUserStore()
+
+const isDraggingList = ref(false)
+const isDraggingCard = ref(false)
 
 const board = computed(() => boardStore.getBoardById(id))
 const userName = computed(() => userStore.name)
@@ -35,27 +38,39 @@ const deleteBoard = () => {
   <PageWrap :title="board.name" v-if="board">
     <template #title>
       <div class="board-title-wrap">
-        <div>
-          <h2>
-            <TextEditable
-              :text="board.name"
-              @updateText="updateBoardTitle"
-              inputId="board-name"
-              class="font-500" />
-          </h2>
-          <div v-if="userName" class="text-sm ml-2 mt-1">created by {{ userName }}</div>
-        </div>
+        <h2>
+          <TextEditable
+            :text="board.name"
+            @updateText="updateBoardTitle"
+            inputId="board-name"
+            class="font-500" />
+        </h2>
 
-        <Button @click="deleteBoard" btnStyle="error" icon="delete" label="delete board" />
+        <div v-if="userName" class="text-sm ml-2">created by {{ userName }}</div>
+        <DeleteWithConfirm
+          label="delete board"
+          @delete="deleteBoard"
+          confirmTitle="delete this board"
+          confirmBtnText="yes, delete"
+          cancelBtnText="no, go back"
+          :confirmMessage="`Do you really want to delete the board '${board.name}'? All lists & cards on the board will be deleted as well.`" />
       </div>
     </template>
     <Lists
       v-if="board?.lists"
       :lists="board.lists"
       :listOrder="board.listOrder"
+      @dragListStart="isDraggingList = true"
+      @dragListEnd="isDraggingList = false"
       @moveList="(posToMoveFrom: string, posToMoveTo: string) => boardStore.moveList(id, +posToMoveFrom, +posToMoveTo)">
       <template #listItem="{ listId, i }">
-        <List :boardId="id" :listId="listId" :pos="i" />
+        <List
+          :boardId="id"
+          :listId="listId"
+          :pos="i"
+          :isDraggingCard="isDraggingCard"
+          @dragCardStart="isDraggingCard = true"
+          @dragCardEnd="isDraggingCard = false" />
       </template>
       <template #lastCol>
         <InputForm
@@ -81,6 +96,6 @@ const deleteBoard = () => {
 
 <style scoped>
 .board-title-wrap {
-  @apply flex justify-between items-center;
+  @apply flex flex-wrap justify-between items-end;
 }
 </style>

@@ -43,16 +43,16 @@ const show = () => {
 }
 
 const hide = () => {
-  onCancel()
+  inputText.value = ''
+  error.value = null
+  shown.value = false
+  nextTick(() => toggleBox.value?.focus())
 }
 
 const onCancel = () => {
+  emit('cancel')
   if (props.toggleable) {
-    emit('cancel')
-    inputText.value = ''
-    error.value = null
-    shown.value = false
-    nextTick(() => toggleBox.value?.focus())
+    hide()
   }
 }
 
@@ -64,11 +64,9 @@ const onSubmit = () => {
       input.value?.focus()
       emit('submitError', res)
     } else {
-      error.value = null
-      inputText.value = ''
       emit('submitSuccess', res)
       if (props.toggleable) {
-        shown.value = false
+        hide()
       }
     }
   }

@@ -5,13 +5,14 @@ import { useRoute, useRouter } from 'vue-router'
 import DialogShade from '~/components/DialogShade.vue'
 import Dialog from '~/components/Dialog.vue'
 import TextEditable from '~/components/TextEditable.vue'
+import Button from '~/components/Button.vue'
 
 const router = useRouter()
 const route = useRoute()
 const boardId = route.params.id as string
 const cardId = route.params.cardId as string
 
-const { getCardById, describeCard, renameCard } = useBoardStore()
+const { getCardById, describeCard, renameCard, deleteCardFromBoard } = useBoardStore()
 
 const card = computed(() => getCardById(boardId, cardId))
 
@@ -26,10 +27,15 @@ const updateDescription = (newDescription: string) => {
 const updateTitle = (newTitle: string) => {
   renameCard(boardId, cardId, newTitle)
 }
+
+const deleteCard = () => {
+  deleteCardFromBoard(boardId, cardId)
+  goToBoard()
+}
 </script>
 
 <template>
-  <DialogShade>
+  <DialogShade v-if="card">
     <Dialog class="card" @close="goToBoard" :title="card.title">
       <template #title>
         <TextEditable
@@ -48,6 +54,14 @@ const updateTitle = (newTitle: string) => {
           :multiline="true"
           placeholder="card description"
           class="my2 min-h-30" />
+        <Button
+          icon="delete"
+          btnStyle="flat-dark"
+          size="xs"
+          label="delete card"
+          :showText="false"
+          class="absolute bottom-1 right-1"
+          @click="deleteCard" />
       </div>
     </Dialog>
   </DialogShade>
@@ -59,6 +73,6 @@ const updateTitle = (newTitle: string) => {
 }
 
 .card__content {
-  @apply px5 relative;
+  @apply px5 pb6 relative;
 }
 </style>

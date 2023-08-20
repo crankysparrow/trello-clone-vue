@@ -46,7 +46,7 @@ const onCreateBoardSuccess = (newBoardId: string) => {
 
   <transition name="fade">
     <DialogShade v-if="showNewBoardForm">
-      <Dialog title="Create Board" @close="closeForm">
+      <Dialog title="Create Board" @close="closeForm" :focusOnMount="false">
         <InputForm
           inputLabel="New Board Title"
           inputId="newname"

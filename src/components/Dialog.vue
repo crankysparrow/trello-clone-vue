@@ -1,11 +1,40 @@
 <script setup lang="ts">
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import Button from './Button.vue'
 
 defineEmits(['close'])
 
-defineProps({
-  title: { type: String, default: '', required: false },
-  fixed: { type: Boolean, default: false, required: false },
+export interface Props {
+  title?: string
+  fixed?: boolean
+  focusOnMount?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  fixed: false,
+  focusOnMount: true,
+})
+
+const el = ref<HTMLElement | null>(null)
+
+// hacky focus trap
+const focusInEvent = (e: FocusEvent) => {
+  if (el.value && !el.value.contains(e.target as Node)) {
+    el.value.focus()
+  }
+}
+
+onMounted(() => {
+  if (props.focusOnMount) {
+    el.value?.focus()
+  }
+
+  document.body.addEventListener('focusin', focusInEvent)
+})
+
+onBeforeUnmount(() => {
+  document.body.removeEventListener('focusin', focusInEvent)
 })
 </script>
 
@@ -13,7 +42,9 @@ defineProps({
   <div
     :class="fixed ? 'dialog dialog-fixed' : 'dialog'"
     v-click-outside="() => $emit('close')"
-    @keyup.esc="() => $emit('close')">
+    @keyup.esc="() => $emit('close')"
+    tabIndex="-1"
+    ref="el">
     <Button
       icon="close"
       @click.native="$emit('close')"

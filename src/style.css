@@ -32,7 +32,7 @@ button {
 
 input:not([type='submit']):not([type='file']),
 textarea {
-  @apply bg-slate-1 border-gray-3 border-1 px-2 py-2 text-4 rounded-sm transition-all;
+  @apply bg-slate-1 border-gray-3 border-1 px-2 py-1 text-4 rounded-sm transition-all;
   @apply dark:bg-slate-1 dark:bg-opacity-10 dark:text-slate-1 dark:border-gray-5;
 }
 
@@ -49,6 +49,10 @@ a,
 button,
 .btn {
   @apply cursor-pointer;
+}
+
+a {
+  @apply text-rose-6 hover:bg-amber-2 focus:bg-amber-2;
 }
 
 a:focus,
