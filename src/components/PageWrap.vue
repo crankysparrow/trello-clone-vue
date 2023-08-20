@@ -31,7 +31,7 @@ defineProps({
   @apply my-4 container mx-auto w-full;
 }
 .content-wrap.columns {
-  @apply grid pb6 pt1 px-4 overflow-x-auto grid-flow-col max-w-full h-full;
+  @apply grid pb-18 pt1 px-4 overflow-x-auto grid-flow-col max-w-full h-full;
   grid-auto-columns: 18rem;
 }
 

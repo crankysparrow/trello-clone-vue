@@ -56,11 +56,10 @@ const infoOpen = ref(false)
 
 <style scoped>
 .bottom-bar {
-  @apply w-full bg-slate-2 fixed bottom-0 left-0 h-15;
+  @apply w-full bg-slate-2 fixed bottom-0 left-0 h-15 z-99;
   @apply flex items-center justify-center;
 }
-
-.dialog-content p {
+√ .dialog-content p {
   margin-bottom: 1rem;
 }
 
