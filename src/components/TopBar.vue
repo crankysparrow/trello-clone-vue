@@ -21,13 +21,13 @@ const profileBtn = () => {
 <template>
   <div class="topbar">
     <div class="topbar-inner">
-      <router-link to="/" btn text-white bg="cyan-7 op-50 hover:op-80"> TRELLO CLONE </router-link>
+      <router-link to="/" class="topbar-btn"> TRELLO CLONE </router-link>
 
       <button
         aria-label="Your Profile"
         title="Your Profile"
         @click="profileBtn"
-        class="profile-btn">
+        class="profile-btn topbar-btn">
         <div i-carbon:person></div>
       </button>
     </div>
@@ -51,14 +51,17 @@ const profileBtn = () => {
 </template>
 
 <style scoped>
+.topbar-btn {
+  @apply bg-cyan-6 bg-op-50 text-white p-1 rounded-sm;
+  @apply hover:bg-cyan-7 hover:bg-op-80 focus:bg-cyan-7 focus:bg-op-80;
+}
 .topbar {
   @apply w-full bg-cyan-8;
   height: 50px;
 }
 
 .profile-btn {
-  @apply bg-cyan-6 bg-opacity-30 text-white text-xl p-2 rounded-full;
-  @apply hover:opacity-60 hover:bg-cyan-5;
+  @apply rounded-full text-xl p-2;
 }
 
 .topbar-inner {

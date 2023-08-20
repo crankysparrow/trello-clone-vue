@@ -105,6 +105,6 @@ defineExpose({ show, hide })
 }
 
 .input-form-input {
-  @apply w-full text-xs mb-2;
+  @apply w-full text-sm mb-2 py-2;
 }
 </style>

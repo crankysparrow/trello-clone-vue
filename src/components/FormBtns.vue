@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import Button from '~/components/Button.vue'
+import { ref } from 'vue'
 
 defineProps({
   labelSubmit: { type: String, default: 'submit' },
   labelCancel: { type: String, default: 'cancel' },
 })
 
+const cancelBtn = ref<typeof Button | null>(null)
+const submitBtn = ref<typeof Button | null>(null)
 const emit = defineEmits(['submit', 'cancel'])
+defineExpose({ cancelBtn, submitBtn })
 
 const cancelSubmit = () => {
   emit('cancel')
@@ -20,11 +24,13 @@ const cancelSubmit = () => {
       @click="cancelSubmit"
       btnStyle="flat-dark"
       class="mr2"
+      ref="cancelBtn"
       :label="labelCancel" />
     <Button
       @click.prevent="$emit('submit')"
       btnStyle="primary"
       :label="labelSubmit"
+      ref="submitBtn"
       type="submit" />
   </div>
 </template>

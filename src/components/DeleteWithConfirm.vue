@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 import DialogShade from './DialogShade.vue'
 import Dialog from './Dialog.vue'
 import Button from './Button.vue'
@@ -25,6 +25,7 @@ withDefaults(defineProps<Props>(), {
 
 const show = ref(false)
 const button = ref<typeof Button | null>(null)
+const formBtns = ref<typeof FormBtns | null>(null)
 
 const doDeletion = () => {
   emit('delete')
@@ -37,6 +38,15 @@ const onCancel = () => {
 }
 
 const emit = defineEmits(['delete'])
+
+watch(show, (newVal) => {
+  if (newVal) {
+    nextTick(() => {
+      console.log(formBtns.value)
+      formBtns.value?.cancelBtn?.focus()
+    })
+  }
+})
 </script>
 
 <template>
@@ -47,7 +57,8 @@ const emit = defineEmits(['delete'])
     size="xs"
     btnStyle="flat-dark"
     icon="delete"
-    ref="button">
+    ref="button"
+    v-bind="$attrs">
   </Button>
   <Teleport to="body">
     <DialogShade v-if="show">
@@ -56,6 +67,7 @@ const emit = defineEmits(['delete'])
           <div class="mb-3">{{ confirmMessage }}</div>
 
           <FormBtns
+            ref="formBtns"
             :labelCancel="cancelBtnText"
             :labelSubmit="confirmBtnText"
             @cancel="onCancel"

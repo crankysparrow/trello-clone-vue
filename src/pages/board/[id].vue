@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import Lists from '~/components/Lists.vue'
 import List from '~/components/List.vue'
 import PageWrap from '~/components/PageWrap.vue'
 import InputForm from '~/components/InputForm.vue'
-import TextEditable from '~/components/TextEditable.vue'
-import DeleteWithConfirm from '~/components/DeleteWithConfirm.vue'
+// import DeleteWithConfirm from '~/components/DeleteWithConfirm.vue'
 import Debug from '~/components/Debug.vue'
+import BoardTitle from '~/components/BoardTitle.vue'
 
 const route = useRoute()
-const router = useRouter()
 const id = route.params.id as string
 const boardStore = useBoardStore()
 const userStore = useUserStore()
@@ -22,39 +21,13 @@ const isDraggingCard = ref(false)
 
 const board = computed(() => boardStore.getBoardById(id))
 const userName = computed(() => userStore.name)
-
-const updateBoardTitle = (newTitle: string) => {
-  if (newTitle.length > 0) boardStore.renameBoard(id, newTitle)
-}
-
-const deleteBoard = () => {
-  boardStore.deleteBoard(id)
-  nextTick(() => router.push('/'))
-}
 </script>
 
 <template>
   <router-view :boardId="id"></router-view>
   <PageWrap :title="board.name" v-if="board">
     <template #title>
-      <div class="board-title-wrap">
-        <h2>
-          <TextEditable
-            :text="board.name"
-            @updateText="updateBoardTitle"
-            inputId="board-name"
-            class="font-500" />
-        </h2>
-
-        <div v-if="userName" class="text-sm ml-2">created by {{ userName }}</div>
-        <DeleteWithConfirm
-          label="delete board"
-          @delete="deleteBoard"
-          confirmTitle="delete this board"
-          confirmBtnText="yes, delete"
-          cancelBtnText="no, go back"
-          :confirmMessage="`Do you really want to delete the board '${board.name}'? All lists & cards on the board will be deleted as well.`" />
-      </div>
+      <BoardTitle :boardId="id" :userName="userName" :boardTitle="board.name" />
     </template>
     <Lists
       v-if="board?.lists"
@@ -93,9 +66,3 @@ const deleteBoard = () => {
     <Debug :boardId="id" />
   </PageWrap>
 </template>
-
-<style scoped>
-.board-title-wrap {
-  @apply flex flex-wrap justify-between items-end;
-}
-</style>

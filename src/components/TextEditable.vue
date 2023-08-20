@@ -121,6 +121,10 @@ const onBlur = (e: FocusEvent) => {
   @apply border-slate-4;
 }
 
+.editable-edit input {
+  @apply w-full;
+}
+
 .editable-cancel {
   @apply absolute top-0 right-1 op-50 hover:op-100;
 }

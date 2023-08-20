@@ -30,13 +30,13 @@ button {
   @apply btn;
 }
 
-input:not([type='submit']):not([type='file']),
+input[type='text'],
 textarea {
   @apply bg-slate-1 border-gray-3 border-1 px-2 py-1 text-4 rounded-sm transition-all;
   @apply dark:bg-slate-1 dark:bg-opacity-10 dark:text-slate-1 dark:border-gray-5;
 }
 
-input:not([type='submit']):not([type='file']):focus,
+input[type='text']:focus,
 textarea:focus {
   @apply outline-3 outline-solid outline-transparent shadow-md shadow-slate-5 shadow-opacity-20;
 }
