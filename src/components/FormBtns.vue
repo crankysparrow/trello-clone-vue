@@ -22,13 +22,13 @@ const cancelSubmit = () => {
     <Button
       type="button"
       @click="cancelSubmit"
-      btnStyle="flat-dark"
+      color="flat-dark"
       class="mr2"
       ref="cancelBtn"
       :label="labelCancel" />
     <Button
       @click.prevent="$emit('submit')"
-      btnStyle="primary"
+      color="primary"
       :label="labelSubmit"
       ref="submitBtn"
       type="submit" />

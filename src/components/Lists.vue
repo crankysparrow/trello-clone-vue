@@ -104,6 +104,7 @@ function drop(e: DragEvent) {
 }
 
 .drag-over {
-  outline: 3px dashed green;
+  /* outline: 3px dashed green; */
+  @apply outline-emerald outline-dashed outline-3 bg-emerald-2 bg-opacity-10;
 }
 </style>

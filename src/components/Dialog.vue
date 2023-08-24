@@ -49,10 +49,11 @@ onBeforeUnmount(() => {
       icon="close"
       @click.native="$emit('close')"
       class="close"
-      btnStyle="flat-light"
+      color="flat-light"
       label="Close Dialog"
       :showText="false"
-      size="sm" />
+      size="sm"
+      shape="circle" />
     <div class="dialog-title">
       <slot name="title">
         <h2 v-if="title">{{ title }}</h2>
@@ -71,12 +72,8 @@ onBeforeUnmount(() => {
   max-height: 90vh;
 }
 
-.dialog-fixed {
-  @apply fixed left-50% top-50% transform -translate-x-1/2 -translate-y-1/2;
-}
-
 .close {
-  @apply absolute top-1 right-0 text-white;
+  @apply absolute top-1 right-1 text-white;
 }
 
 .dialog-title {

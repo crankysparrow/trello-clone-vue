@@ -4,6 +4,7 @@ import Dialog from '~/components/Dialog.vue'
 import DialogShade from '~/components/DialogShade.vue'
 import { useUserStore } from '~/store/userstore'
 import TextEditable from '~/components/TextEditable.vue'
+import Button from '~/components/Button.vue'
 
 const profileOpen = ref(false)
 
@@ -21,15 +22,18 @@ const profileBtn = () => {
 <template>
   <div class="topbar">
     <div class="topbar-inner">
-      <router-link to="/" class="topbar-btn"> TRELLO CLONE </router-link>
+      <Button linkTo="/" label="TRELLO CLONE" size="md" shape="rounded" />
+      <!-- <router-link to="/" class="topbar-btn"> TRELLO CLONE </router-link> -->
 
-      <button
-        aria-label="Your Profile"
-        title="Your Profile"
+      <Button
+        label="Your Profile"
         @click="profileBtn"
-        class="profile-btn topbar-btn">
-        <div i-carbon:person></div>
-      </button>
+        shape="circle"
+        :showText="false"
+        color="primary"
+        size="lg">
+        <div class="i-carbon:person"></div>
+      </Button>
     </div>
   </div>
   <DialogShade v-if="profileOpen">
@@ -51,12 +55,8 @@ const profileBtn = () => {
 </template>
 
 <style scoped>
-.topbar-btn {
-  @apply bg-cyan-6 bg-op-50 text-white p-1 rounded-sm;
-  @apply hover:bg-cyan-7 hover:bg-op-80 focus:bg-cyan-7 focus:bg-op-80;
-}
 .topbar {
-  @apply w-full bg-cyan-8;
+  @apply w-full bg-cyan-8 fixed top-0 left-0 z-99;
   height: 50px;
 }
 
@@ -65,6 +65,6 @@ const profileBtn = () => {
 }
 
 .topbar-inner {
-  @apply container mx-auto flex items-center justify-between h-full relative;
+  @apply container px-4 mx-auto flex items-center justify-between h-full relative;
 }
 </style>

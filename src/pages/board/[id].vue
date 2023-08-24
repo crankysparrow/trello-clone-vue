@@ -7,8 +7,7 @@ import Lists from '~/components/Lists.vue'
 import List from '~/components/List.vue'
 import PageWrap from '~/components/PageWrap.vue'
 import InputForm from '~/components/InputForm.vue'
-// import DeleteWithConfirm from '~/components/DeleteWithConfirm.vue'
-import Debug from '~/components/Debug.vue'
+// import Debug from '~/components/Debug.vue'
 import BoardTitle from '~/components/BoardTitle.vue'
 
 const route = useRoute()
@@ -62,7 +61,5 @@ const userName = computed(() => userStore.name)
         </InputForm>
       </template>
     </Lists>
-
-    <Debug :boardId="id" />
   </PageWrap>
 </template>

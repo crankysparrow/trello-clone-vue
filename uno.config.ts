@@ -1,10 +1,4 @@
-import {
-  defineConfig,
-  presetIcons,
-  presetAttributify,
-  transformerDirectives,
-  presetUno,
-} from 'unocss'
+import { defineConfig, presetIcons, transformerDirectives, presetUno } from 'unocss'
 
 export default defineConfig({
   shortcuts: [
@@ -12,48 +6,19 @@ export default defineConfig({
       'text-error': 'text-red-5 text-xs',
       btn: 'inline-flex align-center',
       'btn-reset': 'text-inherit p-0 bg-transparent hover:bg-transparent focus:bg-transparent',
-      // btn: 'text-slate-1 bg-cyan-7 hover:bg-cyan-6 focus:bg-cyan-6 px-3 py-2 lh-none font-500 text-sm rounded-none transition-all cursor-pointer',
-      // btn: 'bg-cyan-7 text-slate-1 text-sm px-3 py-2 lh-none font-500 rounded-none transition-all cursor-pointer hover:bg-cyan-6',
-      // 'btn-cancel':
-      //   'text-dark-1 bg-transparent hover:bg-opacity-40 hover:bg-slate-5 focus:bg-slate-5 focus:bg-opacity-40',
-      // 'btn-reset': 'bg-transparent p0 text-inherit hover:bg-transparent focus:bg-transparent',
       wrapper: 'container mx-auto ',
     },
-    // [
-    // /^(btn)-(cancel|reset)/,
-    // ([_, __, style]) => {
-    //   let text = 'slate-1'
-    //   let bg = 'cyan-7'
-    //   let bgInteract = ['cyan-6']
-    //   let other = ''
-
-    //   if (style === 'cancel') {
-    //     text = 'dark-1'
-    //     bg = 'transparent'
-    //     bgInteract = ['slate-5', 'opacity-40']
-    //   } else if (style === 'reset') {
-    //     text = 'inherit'
-    //     bg = 'transparent'
-    //     bgInteract = ['transparent']
-    //     other = 'p-0'
-    //   }
-    //   bgInteract = bgInteract.map((opt) => `hover:bg-${opt} focus:bg-${opt}`).join(' ')
-    //   return `text-${text} bg-${bg} ${bgInteract} ${other}`
-    // },
-    // ],
   ],
   rules: [],
   presets: [
     presetUno(),
     presetIcons({
       warn: true,
-      // extraProperties: {
-      //   width: '2em',
-      //   height: '2em',
-      // },
+      cdn: 'https://esm.sh/',
     }),
-    presetAttributify(),
+    // presetAttributify(),
   ],
+  safelist: ['i-carbon:trash-can', 'i-carbon:close'],
 
   transformers: [transformerDirectives()],
 

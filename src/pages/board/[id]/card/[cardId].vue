@@ -53,10 +53,11 @@ const deleteCard = () => {
           inputId="card-desc"
           :multiline="true"
           placeholder="card description"
+          instructions="enter to save; shift+enter for line break"
           class="my2 min-h-30" />
         <Button
           icon="delete"
-          btnStyle="flat-dark"
+          color="flat-dark"
           size="xs"
           label="delete card"
           :showText="false"

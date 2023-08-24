@@ -16,6 +16,7 @@ import BottomBarInfo from './components/BottomBarInfo.vue'
   min-height: 100vh;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: auto 1fr;
+  /* grid-template-rows: auto 1fr; */
+  padding-top: var(--topbar-height);
 }
 </style>

@@ -11,10 +11,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --topbar-height: 3.5rem;
+}
+
+@media (min-width: 1440px) {
+  :root {
+    font-size: 17px;
+  }
 }
 
 body {
-  @apply bg-slate-50 text-dark-900 min-h-screen m0 text-base;
+  @apply text-dark-900 min-h-screen m0 text-base;
 }
 
 h1 {
@@ -79,4 +87,13 @@ input:focus,
 .fade-enter-to,
 .fade-leave {
   opacity: 1;
+}
+
+.btn > div[class*='close'] {
+  /* @apply text-140%; */
+  font-size: 140%;
+}
+
+.btn > div[class*='trash'] {
+  font-size: 120%;
 }

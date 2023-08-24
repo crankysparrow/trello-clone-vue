@@ -110,7 +110,7 @@ function drop(e: DragEvent) {
       <!-- <Button
         icon="delete"
         @click="deleteList"
-        btnStyle="flat-dark"
+        color="flat-dark"
         size="xs"
         label="Delete List"
         :showText="false" /> -->
@@ -178,7 +178,7 @@ function drop(e: DragEvent) {
 }
 
 .card-items {
-  @apply relative z2;
+  @apply relative z2 pb-2;
 }
 
 .list-title {

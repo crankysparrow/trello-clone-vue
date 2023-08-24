@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, h } from 'vue'
+import { RouterLink } from 'vue-router'
 
 export interface Props {
-  btnStyle?: 'primary' | 'subdued' | 'error' | 'flat-light' | 'flat-dark' | 'none'
+  color?: 'primary' | 'subdued' | 'error' | 'flat-light' | 'flat-dark' | 'none'
+  shape?: 'circle' | 'rect' | 'rounded'
   size?: 'xs' | 'sm' | 'md' | 'lg'
   icon?: 'close' | 'delete'
   showText?: boolean
@@ -12,9 +14,10 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  btnStyle: 'primary',
+  color: 'primary',
   showText: true,
   size: 'md',
+  shape: 'rect',
 })
 
 const el = ref<HTMLButtonElement | null>(null)
@@ -25,35 +28,34 @@ const focus = () => {
 
 defineExpose({ focus })
 
-const className = computed(() => `btn btn-style-${props.btnStyle} btn-size-${props.size}`)
+const className = computed(
+  () => `btn btn-style-${props.color} btn-size-${props.size} btn-shape-${props.shape}`
+)
 const ariaLabel = computed(() => props.label ?? undefined)
+
+const iconName = props.icon === 'delete' ? 'trash-can' : props.icon
+const iconNode = props.icon ? h('div', { class: `i-carbon:${iconName}` }) : false
 </script>
 
 <template>
   <a v-if="linkTo && externalLink" :href="linkTo" target="_blank" ref="el" :class="className">
     <slot>
-      <div v-if="icon && icon === 'close'" class="i-carbon:close" />
-      <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />
-
-      <div v-if="label && showText && icon" class="btn-spacer"></div>
+      <iconNode v-if="iconNode" />
+      <div v-if="label && showText && iconNode" class="btn-spacer"></div>
       <div v-if="label && showText" class="btn-label">{{ label }}</div>
     </slot>
   </a>
   <router-link v-else-if="linkTo" :to="linkTo" :class="className">
     <slot>
-      <div v-if="icon && icon === 'close'" class="i-carbon:close" />
-      <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />
-
-      <div v-if="label && showText && icon" class="btn-spacer"></div>
+      <iconNode v-if="iconNode" />
+      <div v-if="label && showText && iconNode" class="btn-spacer"></div>
       <div v-if="label && showText" class="btn-label">{{ label }}</div>
     </slot>
   </router-link>
   <button v-else :class="className" :aria-label="ariaLabel ?? ''" ref="el">
     <slot>
-      <div v-if="icon && icon === 'close'" class="i-carbon:close" />
-      <div v-else-if="icon && icon === 'delete'" class="i-carbon:trash-can" />
-
-      <div v-if="label && showText && icon" class="btn-spacer"></div>
+      <iconNode v-if="iconNode" />
+      <div v-if="label && showText && iconNode" class="btn-spacer"></div>
       <div v-if="label && showText" class="btn-label">{{ label }}</div>
     </slot>
   </button>
@@ -68,16 +70,16 @@ const ariaLabel = computed(() => props.label ?? undefined)
   @apply w-1;
 }
 
-.btn-size-md {
-  @apply px3 py2 text-sm lh-none;
-}
-
 .btn-size-sm {
   @apply px2 py1 text-3.5 lh-none;
 }
 
 .btn-size-xs {
   @apply px1 py1 text-3 lh-none;
+}
+
+.btn-size-md {
+  @apply px3 py2 text-4.5 lh-none;
 }
 
 .btn-size-lg {
@@ -108,7 +110,23 @@ const ariaLabel = computed(() => props.label ?? undefined)
   @apply hover:bg-opacity-10 focus:bg-opacity-10;
 }
 
-.btn > *[class^='i-'] {
-  @apply text-140%;
+.btn.btn-shape-rounded {
+  @apply rounded-md;
+}
+
+.btn.btn-shape-circle.btn-size-sm {
+  @apply px-1 py-1;
+}
+
+.btn.btn-shape-circle.btn-size-md {
+  @apply px-2 py-2;
+}
+
+.btn.btn-shape-circle.btn-size-lg {
+  @apply px-2.5 py-2.5;
+}
+
+.btn.btn-shape-circle {
+  @apply rounded-full;
 }
 </style>

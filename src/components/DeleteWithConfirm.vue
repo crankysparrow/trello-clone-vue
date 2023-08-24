@@ -55,7 +55,7 @@ watch(show, (newVal) => {
     :showText="showLabel"
     @click="show = true"
     size="xs"
-    btnStyle="flat-dark"
+    color="flat-dark"
     icon="delete"
     ref="button"
     v-bind="$attrs">

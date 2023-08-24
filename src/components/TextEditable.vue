@@ -7,6 +7,7 @@ export interface Props {
   multiline?: boolean
   placeholder?: string
   color?: 'light' | 'dark'
+  instructions?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -83,7 +84,7 @@ const onBlur = (e: FocusEvent) => {
         v-click-outside="doUpdateText" />
       <Button
         ref="cancelButton"
-        btnStyle="flat-dark"
+        color="flat-dark"
         size="xs"
         class="editable-cancel"
         @click="cancelEditing"
@@ -91,6 +92,7 @@ const onBlur = (e: FocusEvent) => {
         icon="close"
         label="cancel edit title"
         :showText="false" />
+      <div v-if="instructions" class="instructions">{{ instructions }}</div>
     </div>
   </div>
 </template>
@@ -131,5 +133,9 @@ const onBlur = (e: FocusEvent) => {
 
 .placeholder {
   @apply opacity-50;
+}
+
+.instructions {
+  @apply text-slate-6 text-3.5;
 }
 </style>

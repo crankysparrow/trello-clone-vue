@@ -60,7 +60,9 @@ In a real/bigger project, I might opt for a more robust library to handle the dr
   - [x] can delete card
   - [x] card view
 - UI & Keyboard
-  - [ ] dialog for shortcuts/instructions?
+
+  - [ ] dark/light mode
+  - [x] dialog for shortcuts/instructions?
   - [ ] switch to native HTML dialogs for the actual dialog things
     - [ ] (related) better focus trap
   - [x] add board form - focus moves to input
@@ -75,6 +77,7 @@ In a real/bigger project, I might opt for a more robust library to handle the dr
   - [ ] edit list title via keyboard
   - [ ] edit card title via keyboard
   - [ ] arrow keys pattern
+
 - beyond
   - better error handling
   - database

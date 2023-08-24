@@ -10,18 +10,18 @@ const infoOpen = ref(false)
 
 <template>
   <div class="bottom-bar">
-    <Button btnStyle="flat-dark" @click="infoOpen = true">
+    <Button color="flat-dark" @click="infoOpen = true">
       <div class="i-carbon:information mr1"></div>
       about
     </Button>
     <Button
-      btnStyle="flat-dark"
+      color="flat-dark"
       linkTo="https://github.com/crankysparrow/trello-clone-vue"
       :externalLink="true">
       <div class="i-carbon:logo-github mr1"></div>
       code
     </Button>
-    <Button btnStyle="flat-dark" linkTo="https://michelleenos.com" :externalLink="true">
+    <Button color="flat-dark" linkTo="https://michelleenos.com" :externalLink="true">
       <div class="i-carbon:development mr1"></div>
       by michelle enos
     </Button>
@@ -59,7 +59,7 @@ const infoOpen = ref(false)
   @apply w-full bg-slate-2 fixed bottom-0 left-0 h-15 z-99;
   @apply flex items-center justify-center;
 }
-√ .dialog-content p {
+.dialog-content p {
   margin-bottom: 1rem;
 }
 
