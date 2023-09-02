@@ -3,6 +3,7 @@ import { uid } from 'uid'
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
+import { boardDefault } from './storedefaults'
 
 export interface List {
   id: string
@@ -32,7 +33,7 @@ export interface Card {
 }
 
 export const useBoardStore = defineStore('boards', () => {
-  const boards = useStorage<Boards>('boards', {})
+  const boards = useStorage<Boards>('boards', boardDefault)
 
   const getBoardById = computed(() => {
     return (boardId: string) => boards.value[boardId]
