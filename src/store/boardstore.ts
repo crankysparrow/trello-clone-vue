@@ -257,6 +257,14 @@ export const useBoardStore = defineStore('boards', () => {
     card.description = description ?? ''
   }
 
+  if (Object.keys(boards.value ?? {}).length === 0) {
+    let id = newBoard('1', 'My First Board')
+    if (id instanceof Error) return console.error(id)
+    addListToBoard(id, 'To Do')
+    addListToBoard(id, 'Doing')
+    addListToBoard(id, 'Done')
+  }
+
   return {
     boards,
     newBoard,
